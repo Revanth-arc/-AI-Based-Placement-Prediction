@@ -170,20 +170,10 @@
   }
 
   function renderModelSelectors(models, bestName) {
-    const smoothProbabilityModels = models.filter(model => ['Logistic Regression', 'SVM'].includes(model.name));
-    const predictionModels = smoothProbabilityModels.length ? smoothProbabilityModels : models;
-    $('#featureHelp').textContent = smoothProbabilityModels.length
-      ? `${smoothProbabilityModels.map(model => model.name).join(' and ')} provide gradual probabilities for numeric input changes. Tree and neighbor models are stepwise, so they remain in evaluation but not this probability selector.`
-      : 'No smooth-probability model was available; the remaining classifiers can produce stepwise probability estimates.';
+    $('#featureHelp').textContent = 'All evaluated models are available. Logistic Regression and SVM generally change probabilities smoothly; tree and neighbor models can change in steps as inputs cross learned boundaries.';
     [
       {selector: '#matrixModel', available: models, preferred: bestName},
-      {
-        selector: '#predictionModel',
-        available: predictionModels,
-        preferred: predictionModels.some(model => model.name === bestName)
-          ? bestName
-          : predictionModels.find(model => model.name === 'Logistic Regression')?.name || bestName,
-      },
+      {selector: '#predictionModel', available: models, preferred: bestName},
     ].forEach(({selector, available, preferred}) => {
       const select = $(selector); const old = select.value; select.replaceChildren();
       available.forEach(model => { const option = document.createElement('option'); option.value = model.name; option.textContent = model.name; select.append(option); });

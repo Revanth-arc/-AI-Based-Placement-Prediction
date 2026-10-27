@@ -51,7 +51,7 @@ Open <http://127.0.0.1:5000>. Flask serves the frontend and the API from the sam
 
 - **Reload dataset & retrain** rereads only the server-configured CSV, checks it, and trains fresh pipelines. The browser cannot supply a file path.
 - **Retrain models** reruns model training and refreshes evaluation results.
-- Select a metric to compare models and choose any model to display its confusion matrix. The prediction form offers Logistic Regression and SVM because they provide gradual probabilities for numeric inputs; tree and neighbor probabilities change in steps.
+- Select a metric to compare models and choose any model to display its confusion matrix or produce a probability estimate. Logistic Regression and SVM generally change probabilities smoothly; tree and neighbor models can change in steps as inputs cross learned boundaries.
 - Prediction inputs and defaults are generated from the dataset's actual feature schema. Numeric fields show the observed range; out-of-range values are allowed but produce a reliability warning. New categories similarly produce a warning where the observed category list is available.
 
 ## API endpoints
