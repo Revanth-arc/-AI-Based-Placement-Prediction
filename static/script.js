@@ -170,11 +170,25 @@
   }
 
   function renderModelSelectors(models, bestName) {
-    for (const selector of ['#matrixModel', '#predictionModel']) {
+    const smoothProbabilityModels = models.filter(model => ['Logistic Regression', 'SVM'].includes(model.name));
+    const predictionModels = smoothProbabilityModels.length ? smoothProbabilityModels : models;
+    $('#featureHelp').textContent = smoothProbabilityModels.length
+      ? `${smoothProbabilityModels.map(model => model.name).join(' and ')} provide gradual probabilities for numeric input changes. Tree and neighbor models are stepwise, so they remain in evaluation but not this probability selector.`
+      : 'No smooth-probability model was available; the remaining classifiers can produce stepwise probability estimates.';
+    [
+      {selector: '#matrixModel', available: models, preferred: bestName},
+      {
+        selector: '#predictionModel',
+        available: predictionModels,
+        preferred: predictionModels.some(model => model.name === bestName)
+          ? bestName
+          : predictionModels.find(model => model.name === 'Logistic Regression')?.name || bestName,
+      },
+    ].forEach(({selector, available, preferred}) => {
       const select = $(selector); const old = select.value; select.replaceChildren();
-      models.forEach(model => { const option = document.createElement('option'); option.value = model.name; option.textContent = model.name; select.append(option); });
-      select.value = models.some(model => model.name === old) ? old : (models.some(model => model.name === bestName) ? bestName : models[0]?.name || '');
-    }
+      available.forEach(model => { const option = document.createElement('option'); option.value = model.name; option.textContent = model.name; select.append(option); });
+      select.value = available.some(model => model.name === old) ? old : (available.some(model => model.name === preferred) ? preferred : available[0]?.name || '');
+    });
   }
 
   function renderChart() {
@@ -258,7 +272,7 @@
       label.append(heading, detail); result.append(label);
       const probabilityValue = Number(data.placement_probability);
       if (data.probability_supported && Number.isFinite(probabilityValue)) {
-        const probability = document.createElement('span'); probability.className = 'probability'; probability.textContent = `${(probabilityValue * 100).toFixed(1)}% model-estimated placement probability`; result.append(probability);
+        const probability = document.createElement('span'); probability.className = 'probability'; probability.textContent = `${(probabilityValue * 100).toFixed(2)}% model-estimated placement probability`; result.append(probability);
       } else {
         const probability = document.createElement('span'); probability.className = 'muted-copy'; probability.textContent = 'Probability not provided by this model'; result.append(probability);
       }

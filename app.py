@@ -71,8 +71,6 @@ def _create_default_dataset(path: Path, force: bool = False) -> None:
     backlogs = rng.integers(0, 4, size=n_rows)
     interview = rng.integers(30, 96, size=n_rows)
 
-    # Use a strong decision boundary for the target so the dataset remains learnable and
-    # the model can reliably exceed the 90% accuracy and precision goal.
     score = (
         22 * (cgpa - 7.0)
         + 1.0 * (aptitude - 65)
@@ -85,7 +83,8 @@ def _create_default_dataset(path: Path, force: bool = False) -> None:
         + 10 * internships
     )
     placement_cutoff = np.sort(score)[n_rows - 4610]
-    placement_target = score >= placement_cutoff
+    placement_probability = 1 / (1 + np.exp(np.clip(-(score - placement_cutoff) / 6.0, -60, 60)))
+    placement_target = np.random.default_rng(2026).random(n_rows) < placement_probability
 
     frame = pd.DataFrame({
         "Student ID": student_ids,
@@ -108,7 +107,7 @@ DATA_PATH = _resolve_default_data_path()
 TARGET_ENV = (os.environ.get("PLACEMENT_TARGET") or os.environ.get("RAINFALL_TARGET", "")).strip()
 MODEL_PATH = BASE_DIR / "models.joblib"
 RANDOM_STATE = 42
-MODEL_CACHE_VERSION = 6
+MODEL_CACHE_VERSION = 7
 TEST_FRACTION = 0.15
 VALIDATION_FRACTION = 0.15
 SYNTHETIC_DATA_WARNING = (

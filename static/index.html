@@ -72,7 +72,7 @@
         <div class="section-head"><div><p class="eyebrow">03 / LIVE INFERENCE</p><h2>Predict placement</h2><p class="section-note">Inputs are generated from the trained model’s actual feature schema.</p></div></div>
         <p class="prediction-disclaimer">A model estimate is not a guarantee. Review the held-out results and any warnings before relying on it.</p>
         <form id="predictionForm" novalidate>
-          <div class="prediction-controls"><label for="predictionModel">Classifier<select id="predictionModel" name="model"></select></label><p id="featureHelp" class="muted-copy">The same preprocessing pipeline used during training will transform your values.</p></div>
+          <div class="prediction-controls"><label for="predictionModel">Probability model<select id="predictionModel" name="model"></select></label><p id="featureHelp" class="muted-copy">Logistic Regression and SVM provide gradual probabilities for numeric input changes. Tree and neighbor models are stepwise, so they remain in evaluation but not this probability selector.</p></div>
           <div id="featureFields" class="feature-grid"><p class="muted-copy">Loading model input fields…</p></div>
           <div class="form-actions"><button class="button button-primary" id="predictButton" type="submit" disabled>Estimate placement</button><span id="predictionStatus" role="status" class="muted-copy">Waiting for a trained model.</span></div>
         </form>

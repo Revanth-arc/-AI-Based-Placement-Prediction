@@ -16,7 +16,7 @@ A beginner-friendly full-stack placement classifier built with Flask, pandas, Nu
 
 ## Dataset
 
-The default CSV is synthetic demo data with placement-related features such as CGPA, aptitude, coding, communication, attendance, internships, and interview score. Its labels are generated from a simple scoring rule and are not real student outcomes; strong test scores on this file do not demonstrate real-world placement accuracy. For meaningful predictions, configure `PLACEMENT_DATA_PATH` to a representative historical placement CSV with verified outcomes.
+The default CSV is synthetic demo data with placement-related features such as CGPA, aptitude, coding, communication, attendance, internships, and interview score. Its labels are sampled from a smooth probability curve around a score rule, so small input changes can affect estimated probabilities. These are not real student outcomes; test scores on this file do not demonstrate real-world placement accuracy. For meaningful predictions, configure `PLACEMENT_DATA_PATH` to a representative historical placement CSV with verified outcomes.
 
 To use another CSV, set `PLACEMENT_DATA_PATH` before starting Flask. If the target name is not one of the recognized placement names, or if the CSV has multiple possible target columns, set `PLACEMENT_TARGET` explicitly. Legacy `RAINFALL_DATA_PATH` and `RAINFALL_TARGET` still work too. These PowerShell settings apply to the current terminal:
 
@@ -51,7 +51,7 @@ Open <http://127.0.0.1:5000>. Flask serves the frontend and the API from the sam
 
 - **Reload dataset & retrain** rereads only the server-configured CSV, checks it, and trains fresh pipelines. The browser cannot supply a file path.
 - **Retrain models** reruns model training and refreshes evaluation results.
-- Select a metric to compare models, choose a model to display its confusion matrix, and select a classifier on the prediction form.
+- Select a metric to compare models and choose any model to display its confusion matrix. The prediction form offers Logistic Regression and SVM because they provide gradual probabilities for numeric inputs; tree and neighbor probabilities change in steps.
 - Prediction inputs and defaults are generated from the dataset's actual feature schema. Numeric fields show the observed range; out-of-range values are allowed but produce a reliability warning. New categories similarly produce a warning where the observed category list is available.
 
 ## API endpoints
@@ -98,11 +98,11 @@ One run on the synthetic demo CSV using a stratified random split produced these
 
 | Model | Accuracy | Precision | Placement recall | F1-score | ROC-AUC |
 |---|---:|---:|---:|---:|---:|
-| Decision Tree | 85.44% | 79.86% | 83.09% | 81.44% | 86.48% |
-| Random Forest | 94.56% | 93.42% | 92.34% | 92.88% | 98.82% |
-| Logistic Regression | 99.39% | 98.44% | 100.00% | 99.21% | 100.00% |
-| SVM | 99.72% | 99.57% | 99.71% | 99.64% | 100.00% |
-| K-Nearest Neighbors | 91.06% | 90.41% | 85.84% | 88.07% | 97.41% |
-| Gradient Boosting | 95.56% | 95.67% | 92.63% | 94.13% | 99.27% |
+| Decision Tree | 81.00% | 75.04% | 75.25% | 75.15% | 82.08% |
+| Random Forest | 91.00% | 90.08% | 85.88% | 87.93% | 97.12% |
+| Logistic Regression | 93.33% | 89.99% | 92.87% | 91.40% | 98.70% |
+| SVM | 94.44% | 93.61% | 91.70% | 92.65% | 98.70% |
+| K-Nearest Neighbors | 89.06% | 87.58% | 83.11% | 85.29% | 95.67% |
+| Gradient Boosting | 91.56% | 91.34% | 86.03% | 88.61% | 97.28% |
 
 These figures measure recovery of the synthetic scoring rule only. Validate any model trained on real institutional data against future, representative cohorts before using its predictions.

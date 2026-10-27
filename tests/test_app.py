@@ -82,7 +82,7 @@ def test_dataset_endpoint_returns_schema_preview_and_distribution(client):
     assert body["target"] == "Placement Status"
     assert len(body["columns"]) == 11
     assert len(body["preview"]) == 5
-    assert body["target_distribution"]["placement"] == 4610
+    assert 4400 <= body["target_distribution"]["placement"] <= 4800
     assert body["synthetic_demo_data"] is True
     assert "synthetic demo data" in body["data_quality_warning"].lower()
     assert "Student ID" in body["excluded_columns"]
@@ -175,6 +175,34 @@ def test_generated_dataset_reaches_target_accuracy_and_precision(monkeypatch, tm
     assert best["test"]["precision"] > 0.90
     assert metadata["best_model"] in models
     assert X.groupby(y)["Internships"].mean()[1] > X.groupby(y)["Internships"].mean()[0]
+
+
+def test_generated_dataset_probability_changes_smoothly_with_numeric_input(monkeypatch, tmp_path):
+    dataset_path = tmp_path / "placement_dataset.csv"
+    placement_app._create_default_dataset(dataset_path)
+    monkeypatch.setattr(placement_app, "DATA_PATH", dataset_path)
+    monkeypatch.setattr(placement_app, "TARGET_ENV", "")
+    X, _, metadata = placement_app.prepare_dataset()
+    models, _, _, _ = placement_app.train_models()
+    feature = "CGPA"
+    row = {
+        column: X[column].median() if column in metadata["numeric_features"] else X[column].mode().iloc[0]
+        for column in X.columns
+    }
+
+    for model_name in ("Logistic Regression", "SVM"):
+        model = models[model_name]
+
+        def probability(offset):
+            sample = pd.DataFrame([{**row, feature: row[feature] + offset}], columns=X.columns)
+            return float(model.predict_proba(sample)[0, 1])
+
+        base_probability = probability(0)
+        small_change_probability = probability(0.1)
+
+        assert 0 < base_probability < 1
+        assert 0 < small_change_probability < 1
+        assert abs(small_change_probability - base_probability) >= 0.01
 
 
 def test_student_id_is_excluded_from_prediction_features(monkeypatch, tmp_path):
