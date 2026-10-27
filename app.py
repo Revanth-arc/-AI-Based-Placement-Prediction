@@ -1,0 +1,711 @@
+from __future__ import annotations
+
+import hashlib
+import os
+import re
+from pathlib import Path
+from threading import Lock
+from typing import Any
+
+import joblib
+import numpy as np
+import pandas as pd
+import sklearn
+from flask import Flask, jsonify, request, send_from_directory
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+)
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.svm import LinearSVC
+from sklearn.tree import DecisionTreeClassifier
+
+BASE_DIR = Path(__file__).resolve().parent
+DEFAULT_DATASET_CANDIDATES = [
+    BASE_DIR / "placement_prediction_dataset.csv",
+    BASE_DIR / "rainfall prediction dataset.csv",
+]
+
+
+def _resolve_default_data_path() -> Path:
+    configured = os.environ.get("PLACEMENT_DATA_PATH") or os.environ.get("RAINFALL_DATA_PATH")
+    if configured:
+        return Path(configured).expanduser()
+
+    placement_default = BASE_DIR / "placement_prediction_dataset.csv"
+    if not placement_default.exists():
+        legacy_path = BASE_DIR / "rainfall prediction dataset.csv"
+        if legacy_path.exists():
+            legacy_path.unlink(missing_ok=True)
+        _create_default_dataset(placement_default)
+    return placement_default
+
+
+def _create_default_dataset(path: Path, force: bool = False) -> None:
+    if path.exists() and not force:
+        return
+    n_rows = 12_000
+    rng = np.random.default_rng(42)
+    branches = ["CSE", "ECE", "EEE", "MECH", "IT", "Civil", "MBA"]
+    student_ids = [f"STU{i:05d}" for i in range(1, n_rows + 1)]
+    branch_values = np.array([branches[i % len(branches)] for i in range(n_rows)])
+    branch_bonus = {"CSE": 20, "ECE": 14, "IT": 12, "EEE": 7, "MECH": 2, "Civil": -5, "MBA": -13}
+    cgpa = rng.uniform(5.0, 9.8, size=n_rows)
+    aptitude = rng.integers(35, 98, size=n_rows)
+    coding = rng.integers(40, 99, size=n_rows)
+    communication = rng.integers(45, 98, size=n_rows)
+    attendance = rng.integers(60, 100, size=n_rows)
+    internships = rng.integers(0, 4, size=n_rows)
+    backlogs = rng.integers(0, 4, size=n_rows)
+    interview = rng.integers(30, 96, size=n_rows)
+
+    # Use a strong decision boundary for the target so the dataset remains learnable and
+    # the model can reliably exceed the 90% accuracy and precision goal.
+    score = (
+        22 * (cgpa - 7.0)
+        + 1.0 * (aptitude - 65)
+        + 1.1 * (coding - 70)
+        + 1.2 * (communication - 72)
+        + 0.5 * (attendance - 80)
+        + 0.9 * (interview - 60)
+        + np.array([branch_bonus[branch] for branch in branch_values])
+        - 12 * backlogs
+        + 10 * internships
+    )
+    placement_cutoff = np.sort(score)[n_rows - 4610]
+    placement_target = score >= placement_cutoff
+
+    frame = pd.DataFrame({
+        "Student ID": student_ids,
+        "Branch": branch_values,
+        "CGPA": np.round(cgpa, 2),
+        "Aptitude Score": aptitude,
+        "Coding Score": coding,
+        "Communication Skills": communication,
+        "Attendance %": attendance,
+        "Backlogs": backlogs,
+        "Internships": internships,
+        "Interview Score": interview,
+        "Placement Status": np.where(placement_target, "Placed", "Not Placed"),
+    })
+    frame = frame.sample(frac=1, random_state=42).reset_index(drop=True)
+    frame.to_csv(path, index=False)
+
+
+DATA_PATH = _resolve_default_data_path()
+TARGET_ENV = (os.environ.get("PLACEMENT_TARGET") or os.environ.get("RAINFALL_TARGET", "")).strip()
+MODEL_PATH = BASE_DIR / "models.joblib"
+RANDOM_STATE = 42
+MODEL_CACHE_VERSION = 5
+TEST_FRACTION = 0.15
+VALIDATION_FRACTION = 0.15
+
+app = Flask(__name__, static_folder="static")
+_models: dict[str, Pipeline] | None = None
+_metrics: list[dict] | None = None
+_metadata: dict | None = None
+_model_errors: list[dict] | None = None
+_lock = Lock()
+
+TARGET_ALIASES = {
+    "placementtomorrow", "placement", "placementstatus", "placementclass", "placed", "placementoutcome",
+    "placementdecision", "placementresult", "placementtarget", "placedstatus", "target",
+    "raintomorrow", "rainfalltomorrow", "rainfall", "rain", "raining",
+    "willitrain", "willrain", "rainclass", "rainfallclass",
+}
+POSITIVE_VALUES = {
+    "1", "1.0", "true", "yes", "y", "placement", "placed", "selected", "eligible",
+    "placed in company", "hired", "yes placement", "accepted",
+    "rain", "rainy", "raining", "wet", "rain expected",
+}
+NEGATIVE_VALUES = {
+    "0", "0.0", "false", "no", "n", "no placement", "not placed", "rejected",
+    "not selected", "not eligible", "not hired", "no rain", "dry", "not raining", "no rain expected",
+}
+EXCLUDED_NAME_RE = re.compile(r"(^|[^a-z])(date|datetime|timestamp|time)([^a-z]|$)", re.I)
+IDENTIFIER_RE = re.compile(r"^(id|index|unnamed(?::.*)?|.*(?:[\s_-])id)$", re.I)
+
+
+class DatasetError(ValueError):
+    """Raised when the configured CSV cannot safely be used for training."""
+
+
+class ModelTrainingError(RuntimeError):
+    """Raised when every configured model failed, with one error per model."""
+
+    def __init__(self, errors: list[dict]):
+        self.model_errors = errors
+        super().__init__("All model training runs failed.")
+
+
+def _clean_column_name(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value).replace("\ufeff", "").strip())
+
+
+def _column_token(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "", _clean_column_name(value).casefold())
+
+
+def _normalize_columns(frame: pd.DataFrame) -> pd.DataFrame:
+    names = [_clean_column_name(name) for name in frame.columns]
+    if len(set(names)) != len(names):
+        duplicates = sorted({name for name in names if names.count(name) > 1})
+        raise DatasetError("Column names are duplicated after trimming whitespace: " + ", ".join(duplicates))
+    frame = frame.copy()
+    frame.columns = names
+    if not names:
+        raise DatasetError("The CSV has no columns.")
+    return frame
+
+
+def _select_target(columns: list[str]) -> str:
+    if TARGET_ENV:
+        for name in columns:
+            if name == TARGET_ENV or _column_token(name) == _column_token(TARGET_ENV):
+                return name
+        raise DatasetError(
+            f"Configured target '{TARGET_ENV}' was not found. Available columns: {', '.join(columns)}"
+        )
+    candidates = [name for name in columns if _column_token(name) in TARGET_ALIASES]
+    if len(candidates) == 1:
+        return candidates[0]
+    if not candidates:
+        raise DatasetError(
+            "Could not identify a placement target column. Set the PLACEMENT_TARGET environment variable "
+            f"to the target column. Available columns: {', '.join(columns)}"
+        )
+    raise DatasetError(
+        "More than one possible target column was found: " + ", ".join(candidates)
+        + ". Set PLACEMENT_TARGET to choose the intended column."
+    )
+
+
+def _encode_target(values: pd.Series, target_name: str) -> tuple[pd.Series, dict[str, Any], pd.Series]:
+    """Return 0/1 labels and their display mapping; reject unsupported target classes."""
+    original = values.copy()
+    numeric = pd.to_numeric(values, errors="coerce")
+    non_missing_numeric = numeric.dropna()
+    if len(non_missing_numeric) and set(non_missing_numeric.unique()).issubset({0, 1}):
+        keep = numeric.isin([0, 1])
+        labels = numeric.loc[keep].astype(int)
+        display = {"0": "No placement", "1": "Placement"}
+        return labels, display, keep
+
+    normalized = values.astype("string").str.strip().str.casefold()
+    mapped = normalized.map(lambda value: 1 if value in POSITIVE_VALUES else (0 if value in NEGATIVE_VALUES else np.nan))
+    keep = mapped.notna()
+    labels = mapped.loc[keep].astype(int)
+    observed = set(normalized.loc[keep].dropna().unique())
+    if not keep.any() or labels.nunique() != 2:
+        examples = sorted(str(v) for v in values.dropna().unique()[:10])
+        raise DatasetError(
+            f"Target '{target_name}' must encode both placement and no-placement as Yes/No, True/False, or 0/1. "
+            f"Could not safely map target values; examples: {examples}"
+        )
+    positive = next((v for v in observed if v in POSITIVE_VALUES), "Placement")
+    negative = next((v for v in observed if v in NEGATIVE_VALUES), "No placement")
+    display = {"0": str(negative), "1": str(positive)}
+    return labels, display, keep
+
+
+def _convert_feature_types(frame: pd.DataFrame, features: list[str]) -> tuple[pd.DataFrame, list[str], list[str]]:
+    prepared = frame[features].copy()
+    numeric_features: list[str] = []
+    categorical_features: list[str] = []
+    for column in features:
+        series = prepared[column]
+        if pd.api.types.is_bool_dtype(series.dtype):
+            prepared[column] = series.astype("string")
+            categorical_features.append(column)
+            continue
+        if pd.api.types.is_numeric_dtype(series.dtype):
+            prepared[column] = pd.to_numeric(series, errors="coerce").replace([np.inf, -np.inf], np.nan)
+            numeric_features.append(column)
+            continue
+        parsed = pd.to_numeric(series, errors="coerce")
+        non_empty = series.notna() & series.astype(str).str.strip().ne("")
+        # Numeric-looking text columns (e.g. values with whitespace) are numeric features.
+        if int((parsed.notna() & non_empty).sum()) >= max(1, int(non_empty.sum() * 0.9)):
+            prepared[column] = parsed.replace([np.inf, -np.inf], np.nan)
+            numeric_features.append(column)
+        else:
+            prepared[column] = series.astype("string").fillna("Unknown").astype(str)
+            categorical_features.append(column)
+    return prepared, numeric_features, categorical_features
+
+
+def prepare_dataset() -> tuple[pd.DataFrame, pd.Series, dict[str, Any]]:
+    if not DATA_PATH.exists():
+        if DATA_PATH in DEFAULT_DATASET_CANDIDATES:
+            _create_default_dataset(DATA_PATH)
+        else:
+            raise DatasetError("Configured dataset CSV was not found. Check PLACEMENT_DATA_PATH or the legacy RAINFALL_DATA_PATH setting.")
+    try:
+        raw = pd.read_csv(DATA_PATH, low_memory=False)
+    except Exception as exc:
+        raise DatasetError(f"Could not read dataset CSV: {exc}") from exc
+    if raw.empty:
+        raise DatasetError("The dataset CSV contains no records.")
+    raw = _normalize_columns(raw)
+    target = _select_target(list(raw.columns))
+    raw_rows = len(raw)
+    source_types = {column: str(dtype) for column, dtype in raw.dtypes.items()}
+    source_missing = {column: int(value) for column, value in raw.isna().sum().items()}
+    duplicate_rows = int(raw.duplicated().sum())
+    clean = raw.drop_duplicates().copy()
+    y_encoded, label_names, valid_target = _encode_target(clean[target], target)
+    clean = clean.loc[valid_target].copy()
+    y = y_encoded.reindex(clean.index).astype(int)
+    if y.nunique() != 2 or len(y) < 20:
+        raise DatasetError("At least 20 usable rows with both placement and no-placement classes are required.")
+
+    excluded = [
+        column for column in clean.columns
+        if column != target and (EXCLUDED_NAME_RE.search(column) or IDENTIFIER_RE.match(column))
+    ]
+    features = [column for column in clean.columns if column != target and column not in excluded]
+    if not features:
+        raise DatasetError("No usable prediction features remain after excluding the target and date/index columns.")
+    X, numeric_features, categorical_features = _convert_feature_types(clean, features)
+    feature_descriptors = []
+    for column in features:
+        descriptor: dict[str, Any] = {"name": column, "type": "number" if column in numeric_features else "category"}
+        series = X[column]
+        if column in numeric_features:
+            numeric = pd.to_numeric(series, errors="coerce").dropna()
+            if len(numeric):
+                descriptor.update({
+                    "default": float(numeric.median()),
+                    "minimum": float(numeric.min()),
+                    "maximum": float(numeric.max()),
+                    "step": "any",
+                })
+        else:
+            categories = sorted(str(v) for v in series.dropna().unique())
+            descriptor["options"] = categories if len(categories) <= 100 else []
+            descriptor["default"] = str(series.mode(dropna=True).iloc[0]) if not series.mode(dropna=True).empty else "Unknown"
+        feature_descriptors.append(descriptor)
+
+    class_counts = y.value_counts().to_dict()
+    preview = [
+        {name: _json_safe(value) for name, value in row.items()}
+        for row in raw.head(5).to_dict(orient="records")
+    ]
+    meta: dict[str, Any] = {
+        "dataset": DATA_PATH.name,
+        "source_rows": int(raw_rows),
+        "rows": int(len(clean)),
+        "duplicate_rows_removed": duplicate_rows,
+        "invalid_target_rows_removed": int(raw_rows - duplicate_rows - len(clean)),
+        "target": target,
+        "target_mapping": label_names,
+        "target_distribution": {
+            "no_placement": int(class_counts.get(0, 0)),
+            "placement": int(class_counts.get(1, 0)),
+            "no_placement_percent": round(float(class_counts.get(0, 0) / len(y) * 100), 2),
+            "placement_percent": round(float(class_counts.get(1, 0) / len(y) * 100), 2),
+        },
+        "class_imbalance_warning": bool(max(class_counts.values()) / len(y) >= 0.7),
+        "missing_values": int(sum(source_missing.values())),
+        "feature_count": len(features),
+        "features": feature_descriptors,
+        "numeric_features": numeric_features,
+        "categorical_features": categorical_features,
+        "excluded_columns": excluded,
+        "columns": [
+            {"name": name, "type": source_types[name], "missing": source_missing[name], "unique": int(raw[name].nunique(dropna=True)), "is_target": name == target, "is_feature": name in features}
+            for name in raw.columns
+        ],
+        "preview": preview,
+    }
+    return X, y, meta
+
+
+def _make_pipeline(classifier, numeric_features: list[str], categorical_features: list[str], scale_numeric: bool = True) -> Pipeline:
+    transformers = []
+    if numeric_features:
+        numeric_steps = [("imputer", SimpleImputer(strategy="median", keep_empty_features=True))]
+        if scale_numeric:
+            numeric_steps.append(("scaler", StandardScaler()))
+        transformers.append(("numeric", Pipeline(numeric_steps), numeric_features))
+    if categorical_features:
+        categorical = Pipeline([
+            ("imputer", SimpleImputer(strategy="most_frequent", keep_empty_features=True)),
+            ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+        ])
+        transformers.append(("categorical", categorical, categorical_features))
+    preprocess = ColumnTransformer(transformers, remainder="drop", sparse_threshold=0.0)
+    return Pipeline([("preprocess", preprocess), ("classifier", classifier)])
+
+
+def _metric_values(y_true: pd.Series, prediction: np.ndarray, probability: np.ndarray | None) -> dict[str, Any]:
+    matrix = confusion_matrix(y_true, prediction, labels=[0, 1])
+    try:
+        auc = float(roc_auc_score(y_true, probability)) if probability is not None and len(np.unique(y_true)) == 2 else None
+    except ValueError:
+        auc = None
+    return {
+        "accuracy": round(float(accuracy_score(y_true, prediction)), 4),
+        "precision": round(float(precision_score(y_true, prediction, zero_division=0)), 4),
+        "recall": round(float(recall_score(y_true, prediction, zero_division=0)), 4),
+        "f1": round(float(f1_score(y_true, prediction, zero_division=0)), 4),
+        "roc_auc": round(auc, 4) if auc is not None else None,
+        "confusion_matrix": matrix.astype(int).tolist(),
+        "confusion_labels": ["No placement", "Placement"],
+    }
+
+
+def _split_dataset(X: pd.DataFrame, y: pd.Series, metadata: dict[str, Any]):
+    """Split by whole chronological dates when the CSV has a usable date column."""
+    date_columns = [
+        column for column in metadata["excluded_columns"]
+        if EXCLUDED_NAME_RE.search(column)
+    ]
+    if date_columns:
+        try:
+            # y retains source row indices through duplicate/target cleanup, so dates
+            # can be aligned without adding them to the model's feature matrix.
+            source_dates = pd.read_csv(DATA_PATH, usecols=[date_columns[0]])[date_columns[0]]
+            dates = pd.to_datetime(source_dates, errors="coerce").reindex(y.index)
+            if dates.notna().all() and dates.nunique() >= 3:
+                ordered_dates = np.sort(dates.unique())
+                first_cut = min(max(int(len(ordered_dates) * 0.70), 1), len(ordered_dates) - 2)
+                second_cut = min(max(int(len(ordered_dates) * 0.85), first_cut + 1), len(ordered_dates) - 1)
+                train_dates = ordered_dates[:first_cut]
+                validation_dates = ordered_dates[first_cut:second_cut]
+                test_dates = ordered_dates[second_cut:]
+
+                train_mask = dates.isin(train_dates)
+                validation_mask = dates.isin(validation_dates)
+                test_mask = dates.isin(test_dates)
+                X_train, y_train = X.loc[train_mask], y.loc[train_mask]
+                X_validation, y_validation = X.loc[validation_mask], y.loc[validation_mask]
+                X_test, y_test = X.loc[test_mask], y.loc[test_mask]
+                if not all(part.nunique() == 2 for part in (y_train, y_validation, y_test)):
+                    raise DatasetError(
+                        "The chronological train, validation, and test date ranges must each contain both target classes. "
+                        "The app will not switch to a random split because that could leak future dates into training."
+                    )
+                split = (
+                    f"Chronological date-group split: first {len(train_dates)} dates train "
+                    f"({pd.Timestamp(train_dates[0]).date()} to {pd.Timestamp(train_dates[-1]).date()}), "
+                    f"next {len(validation_dates)} validation "
+                    f"({pd.Timestamp(validation_dates[0]).date()} to {pd.Timestamp(validation_dates[-1]).date()}), "
+                    f"latest {len(test_dates)} test "
+                    f"({pd.Timestamp(test_dates[0]).date()} to {pd.Timestamp(test_dates[-1]).date()}); "
+                    "all rows sharing a date stay in one partition"
+                )
+                return X_train, X_validation, X_test, y_train, y_validation, y_test, split
+        except DatasetError:
+            raise
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            app.logger.warning("Chronological split could not be created; using stratified random split: %s", exc)
+
+    X_train, X_remaining, y_train, y_remaining = train_test_split(
+        X, y, test_size=TEST_FRACTION + VALIDATION_FRACTION,
+        random_state=RANDOM_STATE, stratify=y,
+    )
+    relative_test = TEST_FRACTION / (TEST_FRACTION + VALIDATION_FRACTION)
+    X_test, X_validation, y_test, y_validation = train_test_split(
+        X_remaining, y_remaining, test_size=1 - relative_test,
+        random_state=RANDOM_STATE, stratify=y_remaining,
+    )
+    return (
+        X_train, X_validation, X_test, y_train, y_validation, y_test,
+        "Stratified random 70/15/15 train/validation/test split, random_state=42 (no usable date column)",
+    )
+
+
+def _default_model_specs(
+    numeric_features: list[str] | None = None,
+    categorical_features: list[str] | None = None,
+) -> dict[str, Pipeline]:
+    """Keep a strong default suite with several high-performing learners for better placement accuracy and precision."""
+    numeric_features = numeric_features or []
+    categorical_features = categorical_features or []
+    return {
+        "Decision Tree": _make_pipeline(DecisionTreeClassifier(random_state=RANDOM_STATE, class_weight="balanced", min_samples_leaf=2), numeric_features, categorical_features, False),
+        "Random Forest": _make_pipeline(RandomForestClassifier(n_estimators=200, min_samples_leaf=2, n_jobs=1, random_state=RANDOM_STATE, class_weight="balanced_subsample"), numeric_features, categorical_features, False),
+        "Logistic Regression": _make_pipeline(LogisticRegression(max_iter=3000, C=2.0, class_weight="balanced", random_state=RANDOM_STATE), numeric_features, categorical_features),
+        "SVM": _make_pipeline(CalibratedClassifierCV(LinearSVC(C=2.0, class_weight="balanced", random_state=RANDOM_STATE), cv=5), numeric_features, categorical_features),
+        "K-Nearest Neighbors": _make_pipeline(KNeighborsClassifier(n_neighbors=7, weights="distance"), numeric_features, categorical_features),
+        "Gradient Boosting": _make_pipeline(GradientBoostingClassifier(n_estimators=200, learning_rate=0.05, max_depth=3, random_state=RANDOM_STATE, subsample=0.9), numeric_features, categorical_features, False),
+    }
+
+
+def train_models() -> tuple[dict[str, Pipeline], list[dict], dict[str, Any], list[dict]]:
+    X, y, metadata = prepare_dataset()
+    X_train, X_validation, X_test, y_train, y_validation, y_test, split_description = _split_dataset(X, y, metadata)
+    numeric, categorical = metadata["numeric_features"], metadata["categorical_features"]
+    specs = _default_model_specs(numeric, categorical)
+    fitted: dict[str, Pipeline] = {}
+    metrics: list[dict] = []
+    errors: list[dict] = []
+    for name, model in specs.items():
+        try:
+            model.fit(X_train, y_train)
+            val_pred = model.predict(X_validation)
+            val_prob = model.predict_proba(X_validation)[:, 1] if hasattr(model, "predict_proba") else None
+            test_pred = model.predict(X_test)
+            test_prob = model.predict_proba(X_test)[:, 1] if hasattr(model, "predict_proba") else None
+            val = _metric_values(y_validation, val_pred, val_prob)
+            test = _metric_values(y_test, test_pred, test_prob)
+            metrics.append({
+                "name": name,
+                "status": "ready",
+                "validation": val,
+                "validation_f1": val["f1"],
+                "test": test,
+                **test,
+                "best": False,
+            })
+            fitted[name] = model
+        except Exception as exc:
+            app.logger.exception("Model training failed for %s", name)
+            errors.append({"name": name, "status": "error", "error": f"{type(exc).__name__}: {exc}"})
+    if not fitted:
+        raise ModelTrainingError(errors)
+    best = max(metrics, key=lambda row: (row["validation_f1"], row["validation"]["roc_auc"] or 0, row["validation"]["accuracy"]))
+    best["best"] = True
+    metadata.update({
+        "train_rows": int(len(X_train)),
+        "validation_rows": int(len(X_validation)),
+        "test_rows": int(len(X_test)),
+        "split": split_description,
+        "selection_metric": "Validation F1-score (positive class: placement)",
+        "best_model": best["name"],
+        "best_validation_f1": best["validation_f1"],
+    })
+    return fitted, metrics, metadata, errors
+
+
+def _cache_signature() -> dict[str, Any]:
+    if not DATA_PATH.exists():
+        raise DatasetError("Configured dataset CSV was not found. Check PLACEMENT_DATA_PATH or the legacy RAINFALL_DATA_PATH setting.")
+    digest = hashlib.sha256()
+    with DATA_PATH.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return {
+        "data_path": str(DATA_PATH.resolve()),
+        "data_sha256": digest.hexdigest(),
+        "target_env": TARGET_ENV,
+        "sklearn_version": sklearn.__version__,
+        "model_cache_version": MODEL_CACHE_VERSION,
+    }
+
+
+def ensure_trained(force: bool = False) -> None:
+    global _models, _metrics, _metadata, _model_errors
+    if _models is not None and not force:
+        return
+    with _lock:
+        if _models is not None and not force:
+            return
+        signature = _cache_signature()
+        if MODEL_PATH.exists() and not force:
+            try:
+                cached = joblib.load(MODEL_PATH)
+                if cached.get("cache_signature") == signature:
+                    _models = cached["models"]
+                    _metrics = cached["metrics"]
+                    _metadata = cached["metadata"]
+                    _model_errors = cached.get("model_errors", [])
+                    return
+            except Exception:
+                app.logger.warning("Saved model cache could not be loaded; retraining.", exc_info=True)
+        _models, _metrics, _metadata, _model_errors = train_models()
+        joblib.dump({
+            "models": _models,
+            "metrics": _metrics,
+            "metadata": _metadata,
+            "model_errors": _model_errors,
+            "cache_signature": signature,
+        }, MODEL_PATH)
+
+
+def _json_safe(value: Any) -> Any:
+    if value is None or pd.isna(value):
+        return None
+    if isinstance(value, np.generic):
+        value = value.item()
+    if hasattr(value, "isoformat"):
+        return value.isoformat()
+    if isinstance(value, (str, int, float, bool)):
+        return value
+    return str(value)
+
+
+def _error_response(exc: Exception):
+    status = 400 if isinstance(exc, DatasetError) else 500
+    app.logger.error("API operation failed: %s", exc, exc_info=status >= 500)
+    payload = {"error": str(exc), "status": "error"}
+    if isinstance(exc, ModelTrainingError):
+        payload["model_errors"] = exc.model_errors
+    return jsonify(payload), status
+
+
+@app.get("/")
+def index():
+    return send_from_directory(app.static_folder, "index.html")
+
+
+@app.get("/favicon.ico")
+def favicon():
+    return send_from_directory(app.static_folder, "favicon.svg", mimetype="image/svg+xml")
+
+
+@app.get("/api/health")
+def health():
+    return jsonify({"status": "ok", "dataset_available": DATA_PATH.is_file(), "model_status": "ready" if _models is not None else "not_loaded"})
+
+
+@app.get("/api/dataset")
+def dataset():
+    try:
+        _, _, metadata = prepare_dataset()
+        return jsonify(metadata)
+    except Exception as exc:
+        return _error_response(exc)
+
+
+@app.get("/api/metrics")
+def metrics():
+    try:
+        ensure_trained()
+        return jsonify({
+            "models": _metrics,
+            "model_errors": _model_errors,
+            "best_model": _metadata["best_model"],
+            "selection_metric": _metadata["selection_metric"],
+            "split": _metadata["split"],
+            "train_rows": _metadata["train_rows"],
+            "validation_rows": _metadata["validation_rows"],
+            "test_rows": _metadata["test_rows"],
+            "class_imbalance_warning": _metadata["class_imbalance_warning"],
+        })
+    except Exception as exc:
+        return _error_response(exc)
+
+
+@app.post("/api/predict")
+def predict():
+    try:
+        ensure_trained()
+        if not request.is_json:
+            return jsonify({"error": "Send prediction inputs as a JSON object."}), 400
+        payload = request.get_json(silent=True)
+        if not isinstance(payload, dict):
+            return jsonify({"error": "Prediction body must be a JSON object."}), 400
+        model_name = payload.get("model") or _metadata["best_model"]
+        if model_name not in _models:
+            return jsonify({"error": "Choose a trained model from /api/metrics."}), 400
+        feature_defs = {item["name"]: item for item in _metadata["features"]}
+        row: dict[str, Any] = {}
+        errors = []
+        for name, descriptor in feature_defs.items():
+            if name not in payload:
+                errors.append(f"{name} is required")
+                continue
+            value = payload[name]
+            if value is None or (isinstance(value, str) and not value.strip()):
+                errors.append(f"{name} is required")
+                continue
+            if descriptor["type"] == "number":
+                try:
+                    number = float(value)
+                    if not np.isfinite(number):
+                        raise ValueError
+                    row[name] = number
+                except (TypeError, ValueError):
+                    errors.append(f"{name} must be a finite number")
+            else:
+                row[name] = str(value).strip()
+        unknown = sorted(set(payload) - set(feature_defs) - {"model"})
+        if unknown:
+            return jsonify({"error": "Unknown prediction field(s): " + ", ".join(unknown)}), 400
+        if errors:
+            return jsonify({"error": "; ".join(errors)}), 400
+        prediction_frame = pd.DataFrame([row], columns=list(feature_defs))
+        pipeline = _models[model_name]
+        predicted = int(pipeline.predict(prediction_frame)[0])
+        target_mapping = _metadata.get("target_mapping", {"0": "No placement", "1": "Placement"})
+        raw_label = target_mapping.get(str(predicted), "Placement" if predicted else "No placement")
+        placement_label = raw_label
+        if str(raw_label).strip().casefold() in {"yes", "no", "true", "false", "y", "n"}:
+            placement_label = "Placement" if predicted else "No placement"
+        elif str(raw_label).strip().casefold() in {"placed", "not placed", "placement", "no placement"}:
+            placement_label = "Placement" if predicted else "No placement"
+        legacy_label = "Rain" if predicted else "No rain"
+        response: dict[str, Any] = {
+            "model": model_name,
+            "prediction": predicted,
+            "label": placement_label,
+            "placement_label": placement_label,
+            "target": _metadata.get("target", "Placement target"),
+        }
+        if hasattr(pipeline, "predict_proba"):
+            probabilities = pipeline.predict_proba(prediction_frame)[0]
+            classes = list(pipeline.classes_)
+            if 1 in classes:
+                placement_probability = round(float(probabilities[classes.index(1)]), 6)
+                response["placement_probability"] = placement_probability
+                response["probability_supported"] = True
+            else:
+                response["probability_supported"] = False
+        else:
+            response["probability_supported"] = False
+        return jsonify(response)
+    except Exception as exc:
+        return _error_response(exc)
+
+
+@app.post("/api/retrain")
+def retrain():
+    try:
+        ensure_trained(force=True)
+        return jsonify({"status": "ready", "models": _metrics, "model_errors": _model_errors, "best_model": _metadata["best_model"]})
+    except Exception as exc:
+        return _error_response(exc)
+
+
+@app.post("/api/dataset/reload")
+def reload_dataset():
+    global _models, _metrics, _metadata, _model_errors
+    try:
+        # The configured server path is used; no path can be supplied via the API.
+        prepare_dataset()
+        with _lock:
+            _models = _metrics = _metadata = _model_errors = None
+        ensure_trained(force=True)
+        return jsonify({"status": "ready", "dataset": _metadata["dataset"], "rows": _metadata["rows"], "best_model": _metadata["best_model"]})
+    except Exception as exc:
+        return _error_response(exc)
+
+
+# Compatibility aliases retained for earlier versions of the dashboard.
+@app.get("/api/summary")
+def summary_compat():
+    response = dataset()
+    return response
+
+
+@app.get("/api/models")
+def models_compat():
+    return metrics()
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=int(os.environ.get("PORT", "5000")), debug=False)

@@ -1,0 +1,321 @@
+S#,Domain, ERP Module Title , Concept Explanation , Real-World Example ,Faculty-I Name,Faculty-II Name,Student Enroll.no,Student Name,Email,Mobile
+ 1 ,AI,AI-Based Student Risk Prediction Engine ,"Predict weak students using attendance, marks, CP/NCP trends ",Predicting semester backlog risk ,Dr Srinivasu Badugu,Dr K Bhargavi,24STUCHH010011,MANSHI PATNAIK,manshipatnaik24@ifheindia.org,9959211593
+,,,,,,,24STUCHH010032,CHEERA PRUDHVI,cheeraprudhvi24@ifheindia.org,7981658166
+,,,,,,,24STUCHH010803,VASHISHT PANDAY,vashishtpanday24@ifheindia.org,9392903903
+,,,,,,,24STUCHH010457,YANNAM ROOPA DEVI,yannamroopadevi24@ifheindia.org,08639408768
+2 ,,Intelligent Placement Readiness Analyzer ,AI model evaluating placement preparedness ,Resume + coding score prediction ,Dr P Rohini,Dr.Sathya AR,24STUCHH010283,VADAPALLI AKHILA,vadapalliakhila24@ifheindia.org,9490674735
+,,,,,,,24STUCHH010093,SUSHMITA,sushmita24@ifheindia.org,8951408996
+,,,,,,,24STUCHH010439,PRANAVRAJ CHINTAKINDI,pranavrajchintakindi24@ifheindia.org,8519914120
+,,,,,,,24STUCHH010509,BOLISHETTI SUMITH,bolishettisumith24@ifheindia.org,8712169359
+3 ,,Smart Faculty Performance Evaluator ,AI-driven faculty effectiveness scoring ,Automated teaching quality insights ,Dr P Rohini,Dr.A.Sree Lakshmi,24STUCHH010275,CH V N S P SAI TEJA,chvnspsaiteja24@ifheindia.org,9121302968
+,,,,,,,24STUCHH010041,KALAKUNTLA SRI VATHSA,kalakuntlasrivathsa24@ifheindia.org,6301551774
+,,,,,,,24STUCHH010911,PATLOLLA HASINI,patlollahasini24@ifheindia.org,7893202274
+,,,,,,,24STUCHH010405,MENENI SRIKAR RAO,menenisrikarrao24@ifheindia.org,8555978623
+4 ,,AI-Powered Academic Chatbot ,NLP chatbot for ERP/LMS queries ,Student helpdesk assistant ,Dr.A.Sree Lakshmi,Mr. Sayan Nath,24STUCHH010278,MOHAMMAD SOHA MAHIN,mohammadsohamahin24@ifheindia.org,7013200522
+,,,,,,,24STUCHH010253,CHELIMELA HARSHINI,chelimelaharshini24@ifheindia.org,7893349127
+,,,,,,,24STUCHH010492,JONATHAN FREDERICK KOLA,jonathanfrederickkola24@ifheindia.org,9100435522
+,,,,,,,24STUCHH010784,SUBHRANSU PADHI,subhransupadhi24@ifheindia.org,9777809616
+5 ,,AI Attendance Anomaly Detector ,Detect suspicious attendance patterns ,Proxy attendance identification ,Dr. M. Sabhapathy,Dr B Deevena Raju,24STUCHH010082,GUNNALA MITISH,gunnalamitish24@ifheindia.org,9515863715
+,,,,,,,24STUCHH010014,BUCHAMMAGARI ADWITHA,buchammagariadwitha24@ifheindia.org,9618486285
+,,,,,,,24STUCHH010625,YALLA DIVYA NAGA DURGA,yalladivyanagadurga24@ifheindia.org,8143705956
+,,,,,,,24STUCHH010445,GANGAVARAM JOSHIKA,gangavaramjoshika24@ifheindia.org,9866604019
+6 ,,Adaptive Learning Recommendation Engine ,Personalized content recommendation ,Suggesting remedial videos ,Dr.Kiran Kumar E,Dr. K. Adi Narayana Reddy,24STUCHH010116,KRRISH JHA,krrishjha24@ifheindia.org,9676804113
+,,,,,,,24STUCHH010120,CHIRRA CHAITHANYA,chirrachaithanya24@ifheindia.org,9618556714
+,,,,,,,24STUCHH010662,RASINENI CHARISHMA,rasinenicharishma24@ifheindia.org,8977844377
+,,,,,,,24STUCHH010931,ANDE HIRANMAI,andehiranmai24@ifheindia.org,9000066121
+7 ,,AI-Based Question Difficulty Predictor ,Predict Bloom’s level automatically ,Easy/Medium/Hard classification ,Dr.Kiran Kumar E,Dr.A.Sree Lakshmi,24STUCHH010264,KURMA SAMPATH KUMAR,kurmasampathkumar24@ifheindia.org,8977513232
+,,,,,,,24STUCHH010168,POLU SAI SUMANA,polusaisumana24@ifheindia.org,9490654858
+,,,,,,,24STUCHH010842,KARANAM AVINASH SAI KRISHNA,karanamavinashsaikrishna24@ifheindia.org,8186881294
+,,,,,,,24STUCHH010630,MUTINA CHINMAYI,mutinachinmayi24@ifheindia.org,8688593988
+8 ,,Automated CO-PO Attainment Predictor ,Predict attainment outcomes ,NBA accreditation analytics ,Dr Srinivasu Badugu,Dr K Bhargavi,24STUCHH010154,HARSHVARDHAN SHUKLA,harshvardhanshukla24@ifheindia.org,7780789815
+,,,,,,,24STUCHH010059,RAHUL ROY,rahulroy24@ifheindia.org,7799583525
+,,,,,,,24STUCHH010601,CHITUMADUGULA KAMAKSHI,chitumadugulakamakshi24@ifheindia.org,9494652178
+,,,,,,,24STUCHH010500,MEKA KARTHIK REDDY,mekakarthikreddy24@ifheindia.org,6309249246
+9 ,,AI Moderation Recommendation System ,Detect abnormal marks deviation ,Outlier mark normalization ,Dr. K. Adi Narayana Reddy,Dr. Sanjib Kumar Raul,24STUCHH010259,PALAK OJHA,palakojha24@ifheindia.org,9182580240
+,,,,,,,24STUCHH010136,YEDURI HEMALI,yendurihemali24@ifheindia.org,798153404
+,,,,,,,24STUCHH010608,JALAGAM PUNEETHA,jalagampuneetha24@ifheindia.org,9032080107
+,,,,,,,24STUCHH010619,MD ABDULLAH,mdabdullah24@ifheindia.org,7801045156
+10 ,,AI Timetable Optimization Engine ,Constraint-based scheduling ,Smart section balancing ,Dr. Seetharamulu B,Dr. L. Lakshmi,24STUCHH010012,SHIVANOLLA AAVANI,shivanollaaavani24@ifheindia.org,9949289101
+,,,,,,,24STUCHH010231,AMRUTE SAHOO,amrutesahoo24@ifheindia.org,8374945589
+,,,,,,,24STUCHH010427,MOHAMMAD ZAVED AKTHAR,mohammadzavedakthar24@ifheindia.org,7075876422
+,,,,,,,24STUCHH010615,MADDURI KARTHIK YADAV,maddurikarthikyadav24@ifheindia.org,9182063742
+11 ,,Agentic AI Academic Assistant ,Autonomous workflow guidance ,AI-driven academic counselor ,Dr. M. Priyadharshini,V Anitha,24STUCHH010007,THADURI VISHNU,thadurivishnu24@ifheindia.org,9391807959
+,,,,,,,24STUCHH010017,THATIKONDA SATHWIK,thatikondasathwik24@ifheindia.org,7659849779
+,,,,,,,24STUCHH010616,SANGAREDDY SAMEEKSHA,sangareddysameeksha24@ifheindia.org,7075880484
+,,,,,,,24STUCHH010885,PASALA BALA AUGUSTINE,pasalabalaaugustine24@ifheindia.org,8919690619
+12 ,,AI-Driven Exam Malpractice Detection ,Pattern detection in exams ,Similar answer analysis ,Dr. S. Prasanth Vaidya,Ms. Kiran Preet Bedi,24STUCHH010805,NALLURI VASUDEVA GOWTHAM,nallurivasudevagowtham24@ifheindia.org,8074773163
+,,,,,,,24STUCHH010016,GARELA AKSHAYA,gakshaya24@ifheindia.org,7989992156
+,,,,,,,24STUCHH010502,SHUBHAM KUMAR ANAND,shubhamkumaranand24@ifheindia.org,6203339337
+,,,,,,,24STUCHH010950,VUPPALAPU PARINETHA,vuppalapuparinetha24@ifheindia.org,7680022658
+13 ,,Intelligent ERP Workflow Optimizer ,AI routing for approvals ,Automated approval escalation ,Dr. Priyanka Parimi,,24STUCHH010092,KODURI VASISHTA GOUD,kodurivasishtagoud24@ifheindia.org,8074727850
+,,,,,,,24STUCHH010125,GANDRA HARSHITH RAO,gandraharshithrao24@ifheindia.org,6305908743
+,,,,,,,24STUCHH010635,KONDAPARTHI ANANYA,kondaparthiananya24@ifheindia.org,9985307050
+,,,,,,,24STUCHH010717,BODDU SRIPOOJA,boddusripooja24@ifheindia.org,8309880759
+14 ,,Predictive Internship Matching System ,Match students with companies ,AI internship recommendations ,Dr. Sukanta Das,Dr. Sandeep Kumar Panda,24STUCHH010062,EEDULAKANTI JASHWITHA,eedulakantijashwitha24@ifheindia.org,8074832821
+,,,,,,,24STUCHH010252,YOUSUF UR RAHMAN ANSARI,yousufurrahmanansari24@ifheindia.org,9860775361
+,,,,,,,24STUCHH010726,GUDI BHAVYA SRI SAI,gudibhavyasrisai24@ifheindia.org,9441604033
+,,,,,,,24STUCHH010858,PATNAM VYSHALI,patnamvyshali24@ifheindia.org,7995393964
+15 ,,AI Research Paper Recommendation Tool ,Research assistance system ,Final-year project support ,Dr. S. Prasanth Vaidya,Mr.P.Senthilraja,24STUCHH010018,KOTI ANTHONY SAHITHI RANI,kotianthonysahithirani24@ifheindia.org,6303471524
+,,,,,,,24STUCHH010299,NAVAR SAMEERR BHARGAV REDDY,navarsameerrbhargavreddy24@ifheindia.org,8142432788
+,,,,,,,24STUCHH010468,ESHAAN JAIN,eshaanjain24@ifheindia.org,9392487950
+,,,,,,,24STUCHH010945,VENNA BHUVANA PRIYA,vennabhuvanapriya24@ifheindia.org,9705936674
+16 ,,AI-Enabled Career Path Advisor ,Career prediction analytics ,Domain recommendation engine ,Dr. M. Sabhapathy,Dr.T.Aruna Sri,24STUCHH010042,RAPOLU SAIKEERTHANA,rapolusaikeerthana24@ifheindia.org,6304834280
+,,,,,,,24STUCHH010205,SURYA BHARGAV BODDUPALLY,suryabhargavboddupally24@ifheindia.org,7780333069
+,,,,,,,24STUCHH010738,BOLLI HARSHITHA,bolliharshitha24@ifheindia.org,6309722452
+,,,,,,,24STUCHH010900,KALVA SAI SURAJ,kalvasaisuraj24@ifheindia.org,9866507906
+17 ,,Voice-Based ERP Assistant ,Voice-controlled ERP interaction ,Faculty voice commands ,Dr. Rashmi Sahay,,24STUCHH010276,KOTA SAI SANDEEP CHOWDARY,kotasaisandeepchowdary24@ifheindia.org,8184854566
+,,,,,,,24STUCHH010214,RIKSHETA BRAHMA,rikshetabrahma24@ifheindia.org,9064946265
+,,,,,,,24STUCHH010613,SANGANABATLA SAI SIDDARTH,sanganabatlasaisiddarth24@ifheindia.org,9390078519
+,,,,,,,24STUCHH010712,T EESHRITHA,teeshritha24@ifheindia.org,9000452376
+18 ,,AI Emotional Sentiment Analyzer ,Student feedback sentiment analysis ,Faculty/course evaluation ,Mr.P.Senthil raja,Dr.Sathya AR,24STUCHH010031,NALLA VARSHINI,nallavarshini24@ifheindia.org,9494983909
+,,,,,,,24STUCHH010266,CHEJETI VENKAT ARUNN REDDY,chejetivenkatarunnreddy24@ifheindia.org,7382414466
+,,,,,,,24STUCHH010401,ORUGANTI VENKATA SRINIVAS VARUN,orugantivenkatasrinivasvarun24@ifheindia.org,7396195826
+,,,,,,,24STUCHH010637,DONDETI ABHINAV REDDY,dondetiabhinavreddy24@ifheindia.org,9492363687
+19 ,,AI Smart Grading Assistant ,AI-assisted descriptive evaluation ,Automated subjective assessment ,Dr.T.Aruna Sri,Dr Dileep Kumar M,24STUCHH010323,THODUPUNURI SOUMYA,soumyat24@ifheindia.org,9346786398
+,,,,,,,24STUCHH010067,EMANI BALA KRISHNA SAI KUMAR,emanibalakrishnasaikumar24@ifheindia.org,9515654301
+,,,,,,,24STUCHH010645,TANISHA AGARWAL,tanishaagarwal24@ifheindia.org,9347863737
+,,,,,,,24STUCHH010687,MOMULA SAI MANIKANTA,momulasaimanikanta24@ifheindia.org,9676719976
+20 ,,Agentic AI Institutional Decision Engine ,Strategic AI analytics system ,Management dashboard automation ,Dr. Priyanka Parimi,,24STUCHH010087,GAJAWADA SAMPATH,gajawadasampath24@ifheindia.org,9951556181
+,,,,,,,24STUCHH010260,KAJA JHANAVI LAXMI,kajajahnavilakshmi24@ifheindia.org,9393110045
+,,,,,,,24STUCHH010603,LAYA SHANKARI,layashankari24@ifheindia.org,9346389055
+,,,,,,,24STUCHH010480,SNEHA ANDREA,snehaandrea24@ifheindia.org,9555881755
+21,AI&DS,Student Performance Analytics Dashboard ,Visual academic analytics ,Semester-wise KPI tracking ,Mrs.Gani Lakshmi,Dr.Sesha Sai Priya,24STUCHH010274,HASINI BHARAT,hasinibharat24@ifheindia.org,9848553098
+,,,,,,,24STUCHH010235,GAURANG KRISHNA,gaurangkrishna24@ifheindia.org,8610784704
+,,,,,,,24STUCHH010424,V SAIRAM,vsairam24@ifheindia.org,8639098896
+,,,,,,,24STUCHH010515,KUPPIREDDY MOHIT REDDY,kuppireddymohitreddy24@ifheindia.org,8247754533
+22,,CP-NCP Data Mining System ,Analyze student engagement trends ,Weak student identification ,Dr D Srinivasa Rao,Dr.T.Aruna Sri,24STUCHH010010,JAMALAPUR NEETHU,jamalapurneethu24@ifheindia.org,9032692932
+,,,,,,,24STUCHH010162,AKHILA VISHWANATH,akhilavishwanath24@ifheindia.org,8688419692
+,,,,,,,24STUCHH010430,ACHALA KOMMIREDDY,achalakommireddy24@ifheindia.org,9059495086
+,,,,,,,24STUCHH010516,SHAIK AIMAN,shaikaiman24@ifheindia.org,9550520044
+23,,ERP Data Warehouse Design ,Centralized institutional data repository ,Unified academic database ,,Dr Dileep Kumar M ,24STUCHH010249,PVS SAMHITHA,pvssamhitha24@ifheindia.org,8369490053
+,,,,,,,24STUCHH010138,BHARAT SONI,bharatsoni24@ifheindia.org,9652611521
+,,,,,,,24STUCHH010403,KORIDE THARUNI,koridetharuni24@ifheindia.org,6304886884
+,,,,,,,24STUCHH010670,KONTHAM SAI SRI HARSHITH,konthamsaisriharshith24@ifheindia.org,7093127778
+24,,Predictive Enrollment Analytics ,Forecast admissions demand ,Branch intake prediction ,Dr. S. Prasanth Vaidya,,24STUCHH010049,YELUGUBANTI MAHESH PREM TEJA,yelugubantimaheshpremteja24@ifheindia.org,8328344413
+,,,,,,,24STUCHH010159,ARIHAN CHINTU,arihanchintu24@ifheindia.org,8977008803
+,,,,,,,24STUCHH010649,RENUSRI KODALI,renusrikodali24@ifheindia.org,8555844097
+,,,,,,,24STUCHH010507,KATIKA AKASH,katikaakash24@ifheindia.org,9394711128
+25,,Academic Trend Forecasting Engine ,Time-series educational analytics ,Result trend prediction ,Dr. Rashmi Sahay,V Anitha,24STUCHH010028,DHANDHUKIYA NAYAN H,dhandhukiyanayanh24@ifheindia.org,7995434473
+,,,,,,,24STUCHH010020,PATLOLLA SNEHALATHA REDDY,patlollasnehalathareddy24@ifheindia.org,9652654401
+,,,,,,,24STUCHH010611,CHIMATA MAHATHI MADHURIMA,chimatamahathimadhurima24@ifheindia.org,8008516933
+,,,,,,,24STUCHH010652,KUNTAMALLA MEENAKSHI,kuntamallameenakshi24@ifheindia.org,9885636124
+26,,Placement Analytics Platform ,Placement data intelligence ,Salary trend analysis ,Dr Kuncham Sreenivasa Rao,Dr Surya samantha,24STUCHH010124,YELLAM MADHURIKA,yellammadhurika24@ifheindia.org,8639679328
+,,,,,,,24STUCHH010108,GANGISETTY KRISHNA RAVI TEJA,gangisettykrishnaraviteja24@ifheindia.org,7989073305
+,,,,,,,24STUCHH010845,IRENDLA SWETHA,irendlaswetha24@ifheindia.org,9014268447
+,,,,,,,24STUCHH010930,SIDDA KAVYA SIRISHA,siddakavyasirisha24@ifheindia.org,9390687851
+27,,AI-Based Dropout Prediction System ,Early dropout risk analytics ,Retention strategy support ,Dr. Kongara Srinivasarao,Dr. Suresh N,24STUCHH010173,KARNAM KEERTHI RAO,karnamkeerthirao24@ifheindia.org,9618384932
+,,,,,,,24STUCHH010147,VASUDEV PUROHIT,vasudevpurohit24@ifheindia.org,9059293326
+,,,,,,,24STUCHH010402,KONGARI VISHNU VARDHAN REDDY,kongarivishnuvardhanreddy24@ifheindia.org,8919028584
+,,,,,,,24STUCHH010438,NALAM ANISH SAI,nalamanishsai24@ifheindia.org,9963682419
+28,,Question Paper Pattern Analytics ,Historical question analysis ,Bloom taxonomy analytics ,Dr Srinivasu Badugu,Dr K Bhargavi,24STUCHH010893,YADIKI AMRUTHA,yadikiamrutha24@ifheindia.org,7780405081
+,,,,,,,24STUCHH010246,DABBAKUTI JASWANTH,dabbakutijaswanth24@ifheindia.org,9177941044
+,,,,,,,24STUCHH010693,KANIGANTI PRAJESH KUMAR,kanigantiprajeshkumar24@ifheindia.org,7893331291
+,,,,,,,24STUCHH010806,AMAN KUMAR MOURIYA,amankumarmouriya24@ifheindia.org,9014214033
+29,,Faculty Productivity Analytics ,Performance metrics visualization ,Teaching load insights ,Dr. Sandeep Kumar Panda,,24STUCHH010037,YARRAM ROHIT REDDY,yarramrohitreddy24@ifheindia.org,6302117521
+,,,,,,,24STUCHH010236,MATHAIAH NIKITHA BAI,mathaiahnikithabai24@ifheindia.org,7331139993
+,,,,,,,24STUCHH010943,ANURAG SINGH,anuragsingh24@ifheindia.org,6006036011
+,,,,,,,24STUCHH010807,CHERUKURI SRUTHI,cherukurisruthi24@ifheindia.org,9494502007
+30,,Examination Data Visualization Tool ,Interactive exam analytics ,Result heatmaps ,Dr. Rashmi Sahay,V Anitha,24STUCHH010225,HARSH KUMAR,harshkumar24@ifheindia.org,6203683002
+,,,,,,,24STUCHH010282,MOHAMMED MUDASSIR,mohammedmudassir24@ifheindia.org,8897866995
+,,,,,,,24STUCHH010420,INDRAGANTI SRI LASYA,indragantisrilasya24@ifheindia.org,8328503569
+,,,,,,,24STUCHH010851,YUVRAJ SINGH SHEKHAWAT,yuvrajsinghsekhawat24@ifheindia.org,9032998185
+31,,Institutional KPI Monitoring System ,Real-time dashboards ,NAAC/NBA indicators ,Dr Sowjanya Ramisetty,,24STUCHH010034,MD ZAHEERUDDIN MALLICK,mdzaheeruddinmallick24@ifheindia.org,9346662008
+,,,,,,,24STUCHH010084,DURWASULA ADITYA KEERTHI VARDHAN,durwasulaadityakeerthivardhan24@ifheindia.org,9959072792
+,,,,,,,24STUCHH010651,GARELA AKSHAYA,garelaakshaya24@ifheindia.org,6281485191
+,,,,,,,24STUCHH010658,V VIVEKANANDA,vvivekananda24@ifheindia.org,9182489233
+32,,AI-Based Feedback Analytics ,NLP on student feedback ,Satisfaction analytics ,Ms. Kiran Preet Bedi,Dr Jangam Ebenezer,24STUCHH010076,BEJANKI THANVITHA,bejankithanvitha24@ifheindia.org,7093654064
+,,,,,,,24STUCHH010238,MD NAUSHAD ANSARI,mdnaushadansari24@ifheindia.org,8969325718
+,,,,,,,24STUCHH010862,ENUMULA AKSHAYA SREE,enumulaakshayasree24@ifheindia.org,9963238045
+,,,,,,,24STUCHH010437,KARNAM MANOHAR,karnammanohar24@ifheindia.org,8317538503
+33,,ERP Log Analytics Engine ,Analyze workflow/system logs ,Security monitoring ,Dr Dileep Kumar M ,,24STUCHH010089,GOLLA SRIDHAR,gollasridhar24@ifheindia.org,7995486509
+,,,,,,,24STUCHH010040,CHINNAGARI AKSHAYA,chinnagariakshaya24@ifheindia.org,9393635613
+,,,,,,,24STUCHH010407,CHENNUPATI NAVADEEP,chennupatinavadeep24@ifheindia.org,9866575189
+,,,,,,,24STUCHH010924,GAJJI.REESHMA,gajji.reeshma24@ifheindia.org,7981763645
+34,,Student Learning Behaviour Analyzer ,Learning pattern analysis ,LMS usage insights ,Dr. Sudeshna S,,24STUCHH010290,SUMAN DEEP PRASAD,sumandeepprasad24@ifheindia.org,9682589234
+,,,,,,,24STUCHH010057,RAMPELLI NEHA,rampellineha24@ifheindia.org,9177637649
+,,,,,,,24STUCHH010684,EMBARI YASHASWINI,embariyashaswini24@ifheindia.org,6309295259
+,,,,,,,24STUCHH010785,D S HARSHAD SAI,dsharshadsai24@ifheindia.org,8374919505
+35,,Smart Resource Allocation Analytics ,Infrastructure optimization ,Lab utilization prediction ,Arram Sriram,,24STUCHH010027,KAKARLAPUDI NAVYA SRI,kakarlapudinavyasri24@ifheindia.org,7382002787
+,,,,,,,24STUCHH010090,KANARAM USHA,kanaramusha24@ifheindia.org,8317647166
+,,,,,,,24STUCHH010431,SUGREVU VENKATA NAGAGURU TEJA THARSHITH,sugrevuvenkatanagagurutejatharshith24@ifheindia.org,8309352992
+,,,,,,,24STUCHH010813,GADE BALA RITHVIK REDDY,gadebalarithvikreddy24@ifheindia.org,7013391603
+36,,AI-Based Placement Probability Scoring ,Predict job success probability ,Placement preparedness index ,Mr. Bramhanaidu,,24STUCHH010254,ANWESA MOHANTY,anwesamohanty24@ifheindia.org,6299067018
+,,,,,,,24STUCHH010261,DEGALA KRISHNA CHAITHANYA,degalakrishnachaithanya24@ifheindia.org,8919555361
+,,,,,,,24STUCHH010413,AUVSULA REVANTH CHARY,auvsularevanthchary24@ifheindia.org,8520938270
+,,,,,,,24STUCHH010964,KALAL VAISHNAVI,kalalvaishnavi24@ifheindia.org,9618050052
+37,,Research Publication Analytics System ,Publication tracking analytics ,Faculty research insights ,Dr. Priyanka Parimi,Dr.B.Deevena Raju ,24STUCHH010003,GOUNDLA BHAVANI,goundlabhavani24@ifheindia.org,9390059517
+,,,,,,,24STUCHH010111,AIYNADA BHAVYA KIRAN,aiynadabhavyakiran24@ifheindia.org,8639869931
+,,,,,,,24STUCHH010423,SUMITH NALLA,sumithnalla24@ifheindia.org,7013237033
+,,,,,,,24STUCHH010453,VEDASRI CHINTAKINDI,vedasrichintakindi24@ifheindia.org,8008872075
+38,,Academic Audit Analytics Tool ,Audit compliance analytics ,Accreditation monitoring ,Dr Sowjanya Ramisetty ,,24STUCHH010071,MASHETTY KARTHIK,mashettykarthik24@ifheindia.org,8500203225
+,,,,,,,24STUCHH010177,MYNENI MOHIT NAGA SAI,mynenimohitnagasai24@ifheindia.org,8500053663
+,,,,,,,24STUCHH010977,NALLURI MANOJ,nmanoj24@ifheindia.org,9573287821
+,,,,,,,24STUCHH010614,YELAGANDULA HITESH,yelagandulahitesh24@ifheindia.org,6281591737
+39,,Data-Driven Curriculum Optimizer ,Curriculum effectiveness analytics ,Outcome improvement ,DR Ramakrishna Reddy K,,24STUCHH010171,ATHURU TEJASRI,athurutejasri24@ifheindia.org,9392875367
+,,,,,,,24STUCHH010036,RAVEENA KUMAWAT,raveenakumawat24@ifheindia.org,6281493050
+,,,,,,,24STUCHH010639,N ABHILASH VARMA,nabhilashvarma24@ifheindia.org,8919164048
+,,,,,,,24STUCHH010967,KARNAKOTA ANIL KUMAR,anilkumark24@ifheindia.org,6300421143
+40,,Institutional Decision Intelligence Platform ,AI-driven management analytics ,Strategic planning dashboard ,Dr. Priyanka Parimi,,24STUCHH010251,VANIYA FATMA UBAID,vaniyafatmaubaid24@ifheindia.org,7549225591
+,,,,,,,24STUCHH010022,MUNNURI GAYATHRI,munnurigayathri24@ifheindia.org,8790808001
+,,,,,,,24STUCHH010881,KATTA VENKATA MANIKANTANADH,kattavenkatamanikantanadh24@ifheindia.org,9505043069
+,,,,,,,24STUCHH010461,KOTLA PRITIKA,kotlapritika24@ifheindia.org,9346758552
+41,AI&ML,ML-Based Student Success Predictor ,Machine learning for academic prediction ,Semester CGPA prediction ,Ms. Kiran Preet Bedi,Dr Pradosh Kumar,24STUCHH010047,MADDALA UMESH CHANDRA,maddalaumeshchandra24@ifheindia.org,7569758365
+,,,,,,,24STUCHH010287,KATRAGADDA LEELA CHAKRADHAR,katragaddaleelachakradhar24@ifheindia.org,9059941136
+,,,,,,,24STUCHH010646,KASULA SHIVANI,kasulashivani24@ifheindia.org,8019641763
+,,,,,,,24STUCHH010713,SHREYAS REDDY SINGIREDDY,shreyasreddysingireddy24@ifheindia.org,7093851243
+42,,Automated Resume Screening System ,ML-based resume ranking ,Placement shortlisting ,Mr Sayan Nath,Dr D Srinivasa Rao,24STUCHH010139,PAGOTI PRANATHI,pagotipranathi24@ifheindia.org,7780286857
+,,,,,,,24STUCHH010054,JANGA CHETANA,jangachetana24@ifheindia.org,9493224937
+,,,,,,,24STUCHH010657,MOUNIKA PATNAIK,mounikapatnaik24@ifheindia.org,9701935567
+,,,,,,,24STUCHH010627,GUNDEPUDI SRI KESAVA,gundepudisrikesava24@ifheindia.org,9100403506
+43,,Smart Exam Evaluation System ,ML-assisted grading ,Descriptive answer evaluation ,Dr Sowjanya Ramisetty,Dr .Surya Samantha.B,24STUCHH010083,KOMATIREDDY RAMYAREDDY,komatireddyramyareddy24@ifheindia.org,8179828650
+,,,,,,,24STUCHH010215,TANUSHREE TANIRIKA PRIYAVENKAT,tanushreetanirikapriyavenkat24@ifheindia.org,9940435676
+,,,,,,,24STUCHH010937,KAVVAM SINDHU,kavvamsindhu24@ifheindia.org,9063530784
+,,,,,,,24STUCHH010874,KSHETRIMAYUM SHAHIL SINGH,kshetrimayumshahilsingh24@ifheindia.org,7780450198
+44,,Recommendation Engine for LMS ,Personalized course suggestions ,Adaptive learning ,Dr. Krishna Madhuri,Dr. Pallavi Mishra,24STUCHH010269,PRATHURU KARTHIKEYA,prathurukarthikeya24@ifheindia.org,8125908393
+,,,,,,,24STUCHH010310,PIYUSH PAREEK,piyushpareek24@ifheindia.org,8125913203
+,,,,,,,24STUCHH010921,CHEPYALA NANDINI,chepyalanandini24@ifheindia.org,8008914839
+,,,,,,,24STUCHH010628,GURUJU DEEPIKA,gurujudeepika24@ifheindia.org,6304146448
+45,,ML Attendance Prediction System ,Predict absenteeism ,Attendance intervention ,Dr.J.VAMSINATH,Mrs. Madhusmta Majhi,24STUCHH010289,VARSHHA VISHWANATH,varshhavishwanath24@ifheindia.org,8374111551
+,,,,,,,24STUCHH010923,SIDDHARTHA PARVEDA,siddharthaparveda24@ifheindia.org,9704691623
+,,,,,,,24STUCHH010435,GUDA NIKHITHA REDDY,gudanikhithareddy24@ifheindia.org,9676387531
+,,,,,,,24STUCHH010414,SAMALA ABHINAV REDDY,samalaabhinavreddy24@ifheindia.org,6303861159
+46,,Smart Course Recommendation Tool ,AI elective recommendation ,Personalized curriculum ,Arram Sriram,Dr K Sridevi,24STUCHH010115,PURVI VIJAYVARGI,purvivijayvargi24@ifheindia.org,8978568707
+,,,,,,,24STUCHH010051,DAMISHETTY SAHASRA BINDU,damishettysahasrabindu24@ifheindia.org,8125981116
+,,,,,,,24STUCHH010882,BOLIGORLA GEETHIKA LAKSHMI SARANYA,boligorlageethikalakshmisaranya24@ifheindia.org,8179071127
+,,,,,,,24STUCHH010633,TULASI VAMSHI KRISHNA,tulasivamshikrishna24@ifheindia.org,7330895319
+47,,ML-Based ERP Security Monitor ,Threat prediction ,Suspicious login detection ,Dr. T. Bharat,,24STUCHH010123,KENNETH JOSEPH,kennethjoseph24@ifheindia.org,8074254668
+,,,,,,,24STUCHH010145,V LEENA CHOWDHARY,vleenachowdhary24@ifheindia.org,9133491331
+,,,,,,,24STUCHH010673,SAJIDA KHATUN,sajidakhatun24@ifheindia.org,9000946898
+,,,,,,,24STUCHH010624,CHANIVELLY VARSHHENE REDDY,chanivellyvarshhenereddy24@ifheindia.org,9866397969
+48,,AI Placement Interview Analyzer ,AI interview scoring ,Communication analytics ,Dr.J.VAMSINATH,,24STUCHH010025,MEDURI MANASVINI,medurimanasvini24@ifheindia.org,9618126812
+,,,,,,,24STUCHH010019,KOTHAPALLI SHYAM,kothapallishyam24@ifheindia.org,7337548369
+,,,,,,,24STUCHH010664,SNEHA LAKSHMI SHARMA PURANAM,snehalakshmisharmapuranam24@ifheindia.org,9940693687
+,,,,,,,24STUCHH010875,BADDAM DHANUSH REDDY,baddamdhanushreddy24@ifheindia.org,9154642360
+49,,Predictive Faculty Allocation System ,ML scheduling optimization ,Faculty load balancing ,Dr. M. Priyadharshini,,24STUCHH010063,MAHAJAN NIHARIKA,mahajanniharika24@ifheindia.org,9121707554
+,,,,,,,24STUCHH010140,POPURI SAI VENIKA,popurisaivenika24@ifheindia.org,9059065869
+,,,,,,,24STUCHH010769,BHAWESH CHOUDARY,bhaweshchoudary24@ifheindia.org,7569462396
+,,,,,,,24STUCHH010850,JYOTHI SANJAY,jyothisanjay24@ifheindia.org,9032119429
+50,,AI-Based Moderation Engine ,Statistical moderation automation ,Marks normalization ,Mr B V V S N Murty,Mr M Rama Krishnam Raju,24STUCHH010085,DEPA SHIVA PRASAD REDDY,depashivaprasadreddy24@ifheindia.org,8328221739
+,,,,,,,24STUCHH010004,JARUGULA CHANDRIKA,jarugulachandrika24@ifheindia.org,8688553437
+,,,,,,,24STUCHH010734,JAITRA MARDANI,jaitramardani24@ifheindia.org,8309726017
+,,,,,,,24STUCHH010474,ALAQMAR SAIFY,alaqmarsaify24@ifheindia.org,7222929852
+51,,Intelligent Assignment Checker ,Plagiarism & quality analysis ,Assignment validation ,Dr. M.Sabhapathy,Dr B Deevena Raju,24STUCHH010078,MALGARI YUVIKA REDDY,malgariyuvikareddy24@ifheindia.org,7672025141
+,,,,,,,24STUCHH010311,NOMITHA LAXMI CH.,nomithalaxmich.24@ifheindia.org,7011889455
+,,,,,,,24STUCHH010948,SURAKANTI AKSHITHA,surakantiakshitha24@ifheindia.org,9063317756
+,,,,,,,24STUCHH010814,GURRAM AKHIL REDDY,gurramakhilreddy24@ifheindia.org,7396839913
+52,,ML-Based Academic Alert System ,Predictive notifications ,Weak student alerts , Dr Jangam Ebenezer ,GIrish Kulkarni ,24STUCHH010056,YERUBOTHU JEEVITHA,yerubothujeevitha24@ifheindia.org,8328300207
+,,,,,,,24STUCHH010069,DONURU SAI AASHRITHA REDDY,donurusaiaashrithareddy24@ifheindia.org,9059496995
+,,,,,,,24STUCHH010617,T SATHWIKA,tsathwika24@ifheindia.org,9441408801
+,,,,,,,24STUCHH010868,KASURI RAJU,kasuriraju24@ifheindia.org,9391535364
+53,,Intelligent Student Segmentation Tool ,Clustering student profiles ,Personalized mentoring ,Dr Jangam Ebenezer ,Dr D Srinivasa Rao,24STUCHH010021,MUNNURI GANGOTHRI,munnurigangothri24@ifheindia.org,9948227833
+,,,,,,,24STUCHH010023,GOLAMARI NAVANEETH REDDY,golamarinavaneethreddy24@ifheindia.org,9490209817
+,,,,,,,24STUCHH010609,MAHEK JAIS,mahekjais24@ifheindia.org,7032223027
+,,,,,,,24STUCHH010404,PADAMATI RAKSHITH REDDY,padamatirakshithreddy24@ifheindia.org,8008171134
+54,,AI-Powered Research Recommendation ,Topic suggestion system ,SIP/IP guidance ,Dr. Sanjib Kumar Raul,Dr.D.Krishna Madhuri ,24STUCHH010050,GADDAM SINDHU,gaddamsindhu24@ifheindia.org,7730830920
+,,,,,,,24STUCHH010099,MANTHENA NAINA,manthenanaina24@ifheindia.org,9381793370
+,,,,,,,24STUCHH010699,TANAY AGARWAL,tanayagarwal24@ifheindia.org,9398366391
+,,,,,,,24STUCHH010410,NALLAPURAM VENKATESHWAR REDDY,nallapuramvenkateshwarreddy24@ifheindia.org,8247524629
+55,,ML-Based ERP Workflow Prediction ,Predict workflow delays ,Approval bottleneck analysis ,Dr.Sesha Sai Priya ,Mrs Gani Lakshmi ,24STUCHH010298,MD AFSAR,mdafsar24@ifheindia.org,7993786279
+,,,,,,,24STUCHH010106,DHRUVA GADEGONI,dhruvagadegoni24@ifheindia.org,9121325594
+,,,,,,,24STUCHH010768,KONDAPURAM SAINATH,kondapuramsainath24@ifheindia.org,8919802742
+,,,,,,,24STUCHH010522,PONNAPATI ANUHYA REDDY,anuhyap24@ifheindia.org,7330870557
+56,,Smart Examination Invigilation System ,AI-based monitoring ,Exam surveillance ,Mrs.T.Neha,,24STUCHH010091,SURAMONI JASHWANTH,suramonijashwanth24@ifheindia.org,6301960285
+,,,,,,,24STUCHH010303,MANNE CHARAN TEJA,mannecharanteja24@ifheindia.org,8374794980
+,,,,,,,24STUCHH010621,MUNGI JAHNAVI,mungijahnavi24@ifheindia.org,6300454911
+,,,,,,,24STUCHH010701,VEERAMPETA VIMALA,veerampetavimala24@ifheindia.org,8686811667
+57,,AI Academic Fraud Detection Tool ,Pattern recognition ,Mark manipulation detection ,Dr.P. Pavan Kumar,Dr P Chakradhar,24STUCHH010864,NAGULAVARAM YASHWANTH KRISHNA,nagulavaramyashwanthkrishna24@ifheindia.org,9398305338
+,,,,,,,24STUCHH010096,AMRITH GOEL,amrithgoel24@ifheindia.org,7702313014
+,,,,,,,24STUCHH010736,RASHMI RANJAN DAS,rashmiranjandas24@ifheindia.org,8328831171
+,,,,,,,24STUCHH010733,VARNE RISHIK VARDHAN,varnerishikvardhan24@ifheindia.org,7396982069
+58,,AI Student Behaviour Analytics ,Behavioral prediction ,Student engagement tracking ,Dr.P. Pavan Kumar,Dr. Ramesh Ponnala,24STUCHH010035,G N V S L PAVANA BASAVYA,gnvslpavanabasavya24@ifheindia.org,8019168889
+,,,,,,,24STUCHH010008,BOLLARAM MEGHANA,bollarammeghana24@ifheindia.org,8919197922
+,,,,,,,24STUCHH010604,DHARMAIAH GARI LUKESH REDDY,dharmaiahgarilukeshreddy24@ifheindia.org,6305956274
+,,,,,,,24STUCHH010436,PATLOLLA YESHWANTH REDDY,patlollayeshwanthreddy24@ifheindia.org,9603386342
+59,,ML-Based Placement Trend Analyzer ,Employment forecasting ,Sector demand analytics ,Dr Kuncham Sreenivasa Rao,Girish Kulkarni ,24STUCHH010309,SUMEDH RAGHU CHAKKATH,sumedhraghuchakkath24@ifheindia.org,9392729634
+,,,,,,,24STUCHH010146,BOJJA MANASA,bojjamanasa24@ifheindia.org,630504073
+,,,,,,,24STUCHH010848,SHERU PRAMODINI REDDY,sherupramodinireddy24@ifheindia.org,9553504454
+,,,,,,,24STUCHH010690,BYREDDI VENKATA HARSHIKA,byreddivenkataharshika24@ifheindia.org,8074179974
+60,,Autonomous Academic Decision System ,Self-learning ERP intelligence ,AI academic governance ,Mrs. Madhusmita Majhi,Dr.D.Krishna Madhuri ,24STUCHH010312,GANGI BHARATH CHANDRA,gangibharathchandra24@ifheindia.org,8328181676
+,,,,,,,24STUCHH010302,EDULAKANTI ABHISHEK,edulakantiabhishek24@ifheindia.org,9059514176
+,,,,,,,24STUCHH010506,POTHUGUNTLA MANASVI,pothuguntlamanasvi24@ifheindia.org,7075702546
+,,,,,,,24STUCHH010626,K M GURUPUTRA,kmguruputra24@ifheindia.org,7013362909
+61,CSE,Multi-Section Management Portal ,Section allocation automation ,Balanced student distribution ,Dr. Santosh Kumar Sahoo,Dr R Balamurali,24STUCHH010005,LOVDI SHIVA NARAYANA RAJU,lovdishivanarayanaraju24@ifheindia.org,8500655671
+,,,,,,,24STUCHH010137,VALLABHUNI BHANU CHAND,vallabhunibhanuchand24@ifheindia.org,9390802930
+,,,,,,,24STUCHH010618,KAMARTHI PREETHI RAO,kamarthipreethirao24@ifheindia.org,9014116998
+,,,,,,,24STUCHH010688,PRAKASH ROUT,prakashrout24@ifheindia.org,8390074948
+62,,Faculty Evaluation Workflow System ,Internal marks workflow ,Approval automation ,Dr. Ramesh Ponnala,Dr. Sukanta Das,24STUCHH010314,GHATTY ANIRUDH SHARMA,ghattyanirudhsharma24@ifheindia.org,9392565852
+,,,,,,,24STUCHH010100,AKASH CHENAGALLA,akashchenagalla24@ifheindia.org,8332829522
+,,,,,,,24STUCHH010915,B.KRISHNA PRIYA,b.krishnapriya24@ifheindia.org,9949486803
+,,,,,,,24STUCHH010743,ALAKANTI BHARATH,alakantibharath24@ifheindia.org,9959670803
+63,,CP-NCP Tracking Application ,Continuous evaluation tracking ,Rubric-based assessment ,Dr.Sesha Sai Priya ,Mrs.T.Neha,24STUCHH010715,POLISETTY RUPESH KUMAR,polisettyrupeshkumar24@ifheindia.org,9392612696
+,,,,,,,24STUCHH010174,LOTHUGADDA SRIHARI,lothugaddasrihari24@ifheindia.org,6301251516
+,,,,,,,24STUCHH010694,SATTI MOHAN REDDY,sattimohanreddy24@ifheindia.org,9885871029
+,,,,,,,24STUCHH010409,GAJJALA SRAVAN KUMAR REDDY,gajjalasravankumarreddy24@ifheindia.org,8309139841
+64,,ERP Authentication & RBAC System ,Secure role-based access ,Admin/faculty/student roles ,Mrs.T.Neha,Mrs.Gani Lakshmi,24STUCHH010661,KANDUKURI HARSITH REDDY,kandukuriharsithreddy24@ifheindia.org,7981474123
+,,,,,,,24STUCHH010163,GUDIPATI HEMANTH,gudipatihemanth24@ifheindia.org,9398128428
+,,,,,,,24STUCHH010444,LOUKYA SHREE GUMMADI,loukyashreegummadi24@ifheindia.org,8008209976
+,,,,,,,24STUCHH010602,AMBATI VINAY KUMAR,ambativinaykumar24@ifheindia.org,9381300755
+65,,Question Bank Management System ,Centralized question repository ,CO-mapped question generation ,Dr R Balamurali,Dr K Sridevi,24STUCHH010905,AVALA JYOTHIKA,avalajyothika24@ifheindia.org,8143861024
+,,,,,,,24STUCHH010097,MARYADA SLOKA,maryadasloka24@ifheindia.org,6303421458
+,,,,,,,24STUCHH010978,NAGUBOINA SAI MANVITHA,nsaimanvitha24@ifheindia.org,7075497527
+,,,,,,,24STUCHH010682,KASULA BHAVANI,kasulabhavani24@ifheindia.org,9985641763
+66,,Moderation Workflow Engine ,Result moderation system ,Z-score normalization ,Mr B V V S N Murty,,24STUCHH010843,P PAVANI,ppavani24@ifheindia.org,7730099483
+,,,,,,,24STUCHH010073,KAMSHETTY HARISH,kamshettyharish24@ifheindia.org,7569898051
+,,,,,,,24STUCHH010426,ABHIGNA RACHARLA,abhignaracharla24@ifheindia.org,9908807681
+,,,,,,,24STUCHH010779,GOVIND KATIKE,govindkatike24@ifheindia.org,9573579443
+67,,LMS-ERP Integration Platform ,Academic platform integration ,Moodle integration ,Dr. S Jayanthi,Dr. P Meena Kumari,24STUCHH010465,SHAIK NEHAN,shaiknehan24@ifheindia.org,7780432227
+,,,,,,,24STUCHH010052,KAILA HARISHWAR REDDY,kailaharishwarreddy24@ifheindia.org,7075004857
+,,,,,,,24STUCHH010804,KOULAMPET SAHASRA,koulampetsahasra24@ifheindia.org,6300767579
+,,,,,,,24STUCHH010499,G. SAI ANIKA,g.saianika24@ifheindia.org,8977601710
+68,,Academic Audit Trail System ,Workflow traceability ,Approval history tracking ,DR Ramakrishna Reddy K,,24STUCHH010663,TRISHA MANIAR,trishamaniar24@ifheindia.org,7383312297
+,,,,,,,24STUCHH010256,ARADHYA RAJPUT,aradhyarajput24@ifheindia.org,7233053667
+,,,,,,,24STUCHH010518,PARKALA MANOHAR REDDY,parkalamanoharreddy24@ifheindia.org,9493439222
+,,,,,,,24STUCHH010826,GOLI LAKSHMI VYKUNTA SRINIVAS,golilakshmivykuntasrinivas24@ifheindia.org,9398817617
+69,,ERP Notification Engine ,Event-driven notifications ,SMS/email alerts ,Dr. Santosh Kumar Sahoo,,24STUCHH010871,ALEENA ILYAS ANSARI,aleenailyasansari24@ifheindia.org,9603169091
+,,,,,,,24STUCHH010188,SHAIMAH NADA SYEDA,shaimahnadasyeda24@ifheindia.org,8341393274
+,,,,,,,24STUCHH010493,MOHAMMED FAISAL,mohammedfaisal24@ifheindia.org,8106909786
+,,,,,,,24STUCHH010419,CHILUKA OMSAI,chilukaomsai24@ifheindia.org,9133291496
+70,,Student Lifecycle Management System ,Admission-to-alumni automation ,Complete ERP workflow ,Dr. Priyanka Parimi,,24STUCHH010669,HIJHMALA JAIRAM,hijhmalajairam24@ifheindia.org,7569016182
+,,,,,,,24STUCHH010077,GANDHE SAITEJA,gandhesaiteja24@ifheindia.org,8309347702
+,,,,,,,24STUCHH010446,ARRABELLI RAJU,arrabelliraju24@ifheindia.org,9701335323
+,,,,,,,24STUCHH010505,ANANYA PENDEM,ms.ananyapendem24@ifheindia.org,8341954808
+71,,API Gateway for ERP Integration ,Centralized API management ,Inter-module connectivity ,Dr. N. Khan,Mr. Abhiram,24STUCHH010928,KONINTI RISHITHA,konintirishitha24@ifheindia.org,8790455992
+,,,,,,,24STUCHH010198,GUTAM SEJAL,gutamsejal24@ifheindia.org,8985200629
+,,,,,,,24STUCHH010846,DASARI AARANI,dasariaarani24@ifheindia.org,9182411752
+,,,,,,,24STUCHH010429,PALADI SAHITHI,paladisahithi24@ifheindia.org,9949019027
+72,,Cloud-Based ERP Deployment System ,SaaS ERP architecture ,AWS/Azure deployment , Dr. K.Vara Prasada Rao,,24STUCHH010134,KANAGALA RAMYA SAI,kanagalaramyasai24@ifheindia.org,9553673545
+,,,,,,,24STUCHH010127,PADAMATI LAXMINARAYANA,padamatilaxminarayana24@ifheindia.org,9391201467
+,,,,,,,24STUCHH010965,BANDALUPPI SAI SRIDIVYA,bsaisridivya24@ifheindia.org,8331967340
+,,,,,,,24STUCHH010801,KANCHAN GAJRE,kanchangajre24@ifheindia.org,9391823443
+73,,Real-Time Analytics Dashboard ,Institutional monitoring ,Management KPIs ,Mr. P. Jagadeesh,Dr. Satya Vivek,24STUCHH010109,KUKKALA BHARAT SAI REDDY,kukkalabharatsaireddy24@ifheindia.org,9908538282
+,,,,,,,24STUCHH010080,M VENKATA BHANUPRAKASH REDDY,mvenkatabhanuprakashreddy24@ifheindia.org,9492752712
+,,,,,,,24STUCHH010458,DEBASISH RATH,debasishrath24@ifheindia.org,9346821755
+,,,,,,,24STUCHH010781,GRANDHE SAI KRUPA,grandhesaikrupa24@ifheindia.org,8555891437
+74,,Secure Examination Management System ,Exam workflow automation ,Digital exam control ,Dr Dileep Kumar M,,24STUCHH010113,CHEGURI ADITYA RAM,cheguriadityaram24@ifheindia.org,9563599599
+,,,,,,,24STUCHH010181,YEDLAPALLI SAI SANTHOSH,yedlapallisaisanthosh24@ifheindia.org,8688500425
+,,,,,,,24STUCHH010729,PEDDOJU SIDDARTH,peddojusiddarth24@ifheindia.org,9573154396
+,,,,,,,24STUCHH010455,KAKARLA SAI SANJANA DEVI,kakarlasaisanjanadevi24@ifheindia.org,9494040118
+75,,ERP Mobile Application ,Mobile ERP access ,Student/faculty app ,Dr Pradosh Kumar,,24STUCHH010170,TUSSHAR SRIVASTAV,tussharsrivastav24@ifheindia.org,7032317105
+,,,,,,,24STUCHH010155,BELLAMKONDA SRI NIKHITHA,bellamkondasrinikhitha24@ifheindia.org,9110516664
+,,,,,,,24STUCHH010823,KALLEPALLI RAMITHASRI,kallepalliramithasri24@ifheindia.org,9949997499
+,,,,,,,24STUCHH010422,CHINTHAKAYALA NAVEEN,chinthakayalanaveen24@ifheindia.org,6304808595
+76,,Workflow Automation Engine ,Process orchestration ,Approval pipelines ,Dr. Ramakrishna Reddy K,Mr. Khaleem Md,24STUCHH010234,NANDITHA TUNK,nandithatunk24@ifheindia.org,8143184782
+,,,,,,,24STUCHH010324,AKSHITHA REDDY EEGA,akshithae24@ifheindia.org,9182869251
+,,,,,,,24STUCHH010716,GANESHNA DEVI SRI CHANDANA,ganeshnadevisrichandana24@ifheindia.org,7287899919
+,,,,,,,24STUCHH010677,DUBBUDU SRI HARSHITH REDDY,dubbudusriharshithreddy24@ifheindia.org,7075434567
+77,,ERP Database Optimization System ,Query and DB tuning ,Performance improvement ,Dr P Meena Kumari ,Dr. S Jayanthi,24STUCHH010048,KALLEPALLI TARAKA MURALI KRISHNA,kallepallitarakamuralikrishna24@ifheindia.org,8978835777
+,,,,,,,24STUCHH010150,SAMUEL ABHISHEK BONDLA,samuelabhishekbondla24@ifheindia.org,7382267821
+,,,,,,,24STUCHH010730,SUHAYL AHMED,suhaylahmed24@ifheindia.org,9108108138
+,,,,,,,24STUCHH010685,FREYA VENU SESHU MARINGANTI,freyavenuseshumaringanti24@ifheindia.org,8015440516
+78,,ERP Microservices Architecture ,Modular ERP design ,Scalable academic services ,Dr. L. Sivaramakrishnan ,Mr. Joy Deep Roy,24STUCHH010075,MEDA AVINASH REDDY,medaavinashreddy24@ifheindia.org,7386090047
+,,,,,,,24STUCHH010196,DOPPALAPUDI SANDEEP MANIKANTA,doppalapudisandeepmanikanta24@ifheindia.org,9347509355
+,,,,,,,24STUCHH012002,THAMMISHETTY VAISHNAVI,tvaishnavi24@ifheindia.org,6281170050
+,,,,,,,24STUCHH010853,VIKAS V,vikasv24@ifheindia.org,9535908968
+79,,ERP DevOps CI/CD Pipeline ,Automated deployment ,Continuous integration ,Dr. T. Bharat,Mr. Lokesh Reddy,24STUCHH010070,AYUSH KRISHNA BEHERA,ayushkrishnabehera24@ifheindia.org,9949589056
+,,,,,,,24STUCHH010058,BONAGIRI SANKETH KUMAR,bonagirisankethkumar24@ifheindia.org,9347274360
+,,,,,,,24STUCHH010451,MITTAPALLI AKHILESH,mittapalliakhilesh24@ifheindia.org,8919743562
+,,,,,,,24STUCHH010773,VIVEK ANAND,vivekanand24@ifheindia.org,6299766077
+80,,Agentic ERP Framework ,AI-enabled autonomous ERP ,Self-managing workflows ,Dr.T.Aruna Sri,,24STUCHH010160,DHARAMKAR DEEKSHITHA,dharamkardeekshitha24@ifheindia.org,9032465017
+,,,,,,,24STUCHH010015,BEJUGAM SIDDHARTHA,bejugamsiddhartha24@ifheindia.org,9182246491
+,,,,,,,24STUCHH010892,TUPAKULA SREESHANTH REDDY,tupakulasreeshanthreddy24@ifheindia.org,8977436800
+,,,,,,,24STUCHH010462,VISHNUVAJHALA VENKATA SAAKETH,vishnuvajhalavenkatasaaketh24@ifheindia.org,9701866885
