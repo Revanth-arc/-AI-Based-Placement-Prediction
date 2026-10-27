@@ -25,7 +25,7 @@ $env:PLACEMENT_DATA_PATH = "C:\data\placement.csv"
 $env:PLACEMENT_TARGET = "Placement Tomorrow"
 ```
 
-Feature columns are inferred from the selected CSV. Numeric columns use median imputation and scaling where appropriate; categorical columns use most-frequent imputation and one-hot encoding. New categorical values are accepted by the pipeline.
+Feature columns are inferred from the selected CSV. Numeric columns use median imputation and scaling where appropriate; categorical columns use most-frequent imputation and one-hot encoding. New categorical values and numeric values outside the training range are accepted but surfaced as reliability warnings in prediction results. Predictions also show the selected model's held-out test performance and flag probabilities close to its decision threshold. These safeguards cannot make an unrepresentative dataset reliable; use verified, representative historical outcomes before relying on predictions.
 
 ## Set up and run in VS Code
 
@@ -52,7 +52,7 @@ Open <http://127.0.0.1:5000>. Flask serves the frontend and the API from the sam
 - **Reload dataset & retrain** rereads only the server-configured CSV, checks it, and trains fresh pipelines. The browser cannot supply a file path.
 - **Retrain models** reruns model training and refreshes evaluation results.
 - Select a metric to compare models, choose a model to display its confusion matrix, and select a classifier on the prediction form.
-- Prediction inputs and safe defaults are generated from the dataset's actual feature schema. Numeric fields show the observed range for reference; values outside that range are allowed.
+- Prediction inputs and defaults are generated from the dataset's actual feature schema. Numeric fields show the observed range; out-of-range values are allowed but produce a reliability warning. New categories similarly produce a warning where the observed category list is available.
 
 ## API endpoints
 

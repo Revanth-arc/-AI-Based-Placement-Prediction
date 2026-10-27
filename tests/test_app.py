@@ -83,6 +83,8 @@ def test_dataset_endpoint_returns_schema_preview_and_distribution(client):
     assert len(body["columns"]) == 11
     assert len(body["preview"]) == 5
     assert body["target_distribution"]["placement"] == 4610
+    assert body["synthetic_demo_data"] is True
+    assert "synthetic demo data" in body["data_quality_warning"].lower()
     assert "Student ID" in body["excluded_columns"]
     assert "Student ID" not in [feature["name"] for feature in body["features"]]
 
@@ -103,7 +105,31 @@ def test_prediction_accepts_feature_schema_and_returns_probability(client):
     assert result["prediction"] == 1
     assert result["label"] == "Placement"
     assert result["placement_probability"] == 0.8
+    assert result["evaluation"]["test_rows"] == 5
+    assert result["evaluation"]["accuracy"] == 0.9
     assert "label" in result
+
+
+def test_prediction_warns_for_values_outside_the_training_range(client):
+    _, _, metadata = ready_state()
+    payload = make_prediction_payload(metadata)
+    numeric = next(feature for feature in metadata["features"] if feature["type"] == "number")
+    payload[numeric["name"]] = numeric["maximum"] + 1
+
+    response = client.post("/api/predict", json=payload)
+
+    assert response.status_code == 200
+    warnings = response.get_json()["input_warnings"]
+    assert any(numeric["name"] in warning and "training range" in warning for warning in warnings)
+
+    payload = make_prediction_payload(metadata)
+    category = next(feature for feature in metadata["features"] if feature["type"] == "category")
+    payload[category["name"]] = "Unseen training category"
+    response = client.post("/api/predict", json=payload)
+
+    assert response.status_code == 200
+    warnings = response.get_json()["input_warnings"]
+    assert any(category["name"] in warning and "not observed" in warning for warning in warnings)
 
 
 def test_prediction_rejects_missing_and_invalid_fields(client):

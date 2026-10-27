@@ -40,6 +40,9 @@
     $('#targetName').textContent = data.target || 'Target';
     $('#footerTarget').textContent = `· Target: ${data.target || 'configured target'}`;
     $('#datasetNote').textContent = `${display(data.rows)} usable records from ${data.dataset || 'the configured CSV'}; date and identifier columns are excluded from model inputs.`;
+    const trustNotice = $('#datasetTrustNotice');
+    trustNotice.hidden = !data.data_quality_warning;
+    trustNotice.textContent = data.data_quality_warning || '';
     $('#cleanupNote').textContent = `Removed ${display(data.duplicate_rows_removed)} duplicate rows and ${display(data.invalid_target_rows_removed)} rows with unusable target values. Missing feature values are imputed inside each model pipeline.`;
     const distribution = data.target_distribution || {};
     const noPlacement = distribution.no_placement ?? 0;
@@ -255,10 +258,21 @@
       label.append(heading, detail); result.append(label);
       const probabilityValue = Number(data.placement_probability);
       if (data.probability_supported && Number.isFinite(probabilityValue)) {
-        const probability = document.createElement('span'); probability.className = 'probability'; probability.textContent = `${(probabilityValue * 100).toFixed(1)}% placement probability`; result.append(probability);
+        const probability = document.createElement('span'); probability.className = 'probability'; probability.textContent = `${(probabilityValue * 100).toFixed(1)}% model-estimated placement probability`; result.append(probability);
       } else {
         const probability = document.createElement('span'); probability.className = 'muted-copy'; probability.textContent = 'Probability not provided by this model'; result.append(probability);
       }
+      if (data.evaluation) {
+        const evaluation = document.createElement('p'); evaluation.className = 'prediction-evaluation';
+        evaluation.textContent = `Held-out test results for this model (${display(data.evaluation.test_rows)} records): ${percent(data.evaluation.accuracy)} accuracy, ${percent(data.evaluation.precision)} placement precision, ${percent(data.evaluation.recall)} placement recall. These results describe the dataset, not a guarantee for this individual.`;
+        result.append(evaluation);
+      }
+      const warnings = [...(data.input_warnings || [])];
+      if (data.near_decision_boundary) warnings.push('The model score is close to its decision threshold; treat this result as uncertain.');
+      if (data.data_quality_warning) warnings.push(data.data_quality_warning);
+      warnings.forEach(message => {
+        const warning = document.createElement('p'); warning.className = 'prediction-warning'; warning.textContent = message; result.append(warning);
+      });
       result.classList.toggle('placement', Number(data.prediction) === 1); result.classList.remove('error'); status.textContent = 'Prediction completed successfully.';
     } catch (error) {
       const result = $('#predictionResult'); result.replaceChildren(); result.hidden = false; result.className = 'prediction-result error';

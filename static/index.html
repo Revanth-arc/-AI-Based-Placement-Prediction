@@ -47,6 +47,7 @@
 
       <section class="panel section-panel" id="dataset">
         <div class="section-head"><div><p class="eyebrow">01 / SOURCE PROFILE</p><h2>Dataset information</h2><p class="section-note" id="datasetNote">Loading dataset profile…</p></div><button class="button button-light" id="refreshDataset" type="button">Reload dataset &amp; retrain</button></div>
+        <div class="trust-notice" id="datasetTrustNotice" role="note" hidden></div>
         <div class="dataset-layout">
           <div class="distribution-card"><div class="mini-head"><strong>Target distribution</strong><span id="targetName">—</span></div><div class="distribution-bar" role="img" aria-label="Target class distribution"><span id="noPlacementBar"></span><span id="placementBar"></span></div><div class="distribution-legend"><span><i class="swatch swatch-dry"></i><b id="noPlacementCount">—</b> No placement <small id="noPlacementPct"></small></span><span><i class="swatch swatch-placement"></i><b id="placementCount">—</b> Placement <small id="placementPct"></small></span></div><p class="muted-copy" id="cleanupNote"></p></div>
           <div class="table-wrap"><table class="data-table" id="columnsTable"><caption>CSV columns and data quality</caption><thead><tr><th scope="col">Column</th><th scope="col">Type</th><th scope="col">Missing</th><th scope="col">Unique</th><th scope="col">Use</th></tr></thead><tbody></tbody></table></div>
@@ -69,6 +70,7 @@
 
       <section class="panel section-panel prediction-section" id="prediction">
         <div class="section-head"><div><p class="eyebrow">03 / LIVE INFERENCE</p><h2>Predict placement</h2><p class="section-note">Inputs are generated from the trained model’s actual feature schema.</p></div></div>
+        <p class="prediction-disclaimer">A model estimate is not a guarantee. Review the held-out results and any warnings before relying on it.</p>
         <form id="predictionForm" novalidate>
           <div class="prediction-controls"><label for="predictionModel">Classifier<select id="predictionModel" name="model"></select></label><p id="featureHelp" class="muted-copy">The same preprocessing pipeline used during training will transform your values.</p></div>
           <div id="featureFields" class="feature-grid"><p class="muted-copy">Loading model input fields…</p></div>
